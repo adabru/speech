@@ -1,0 +1,11 @@
+[Unit]
+Description=virtual evdev keyboard
+
+[Service]
+Type=simple
+ExecStart=/home/slava/speech_commands/run/keys.py
+Restart=on-failure
+RestartSec=30s
+
+[Install]
+WantedBy=multi-user.target

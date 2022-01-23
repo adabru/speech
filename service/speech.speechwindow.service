@@ -1,0 +1,11 @@
+[Unit]
+Description=speech control status widget
+
+[Service]
+Type=simple
+ExecStart=/home/slava/speech_commands/run/speechwindow.py
+Restart=on-failure
+RestartSec=30s
+
+[Install]
+WantedBy=default.target
