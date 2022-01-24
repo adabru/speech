@@ -1,0 +1,12 @@
+[Unit]
+Description=talonvoice
+
+[Service]
+Type=simple
+ExecStart=/home/adabru/downloads/talon-linux/talon/run.sh
+Restart=on-failure
+RestartSec=30s
+
+[Install]
+WantedBy=default.target
+
