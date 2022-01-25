@@ -231,7 +231,7 @@ alternate_keys = {
     "wipe": "backspace",
     "go": "enter",
     "race": "delete",
-    "ta": "tab",
+    "te": "tab",
     # 'junk': 'backspace',
     "page up": "pageup",
     "page down": "pagedown",

@@ -214,11 +214,13 @@ class Actions:
 
     def mouse_scroll_left(amount: float = 1):
         """Scrolls left"""
-        actions.mouse_scroll(0, -amount * setting_mouse_wheel_horizontal_amount.get())
+        actions.mouse_scroll(
+            0, -amount * setting_mouse_wheel_horizontal_amount.get())
 
     def mouse_scroll_right(amount: float = 1):
         """Scrolls right"""
-        actions.mouse_scroll(0, amount * setting_mouse_wheel_horizontal_amount.get())
+        actions.mouse_scroll(
+            0, amount * setting_mouse_wheel_horizontal_amount.get())
 
     def mouse_scroll_stop():
         """Stops scrolling"""
@@ -247,42 +249,13 @@ class Actions:
     def mouse_move_center_active_window():
         """move the mouse cursor to the center of the currently active window"""
         rect = ui.active_window().rect
-        ctrl.mouse_move(rect.left + (rect.width / 2), rect.top + (rect.height / 2))
+        ctrl.mouse_move(rect.left + (rect.width / 2),
+                        rect.top + (rect.height / 2))
 
 
 def show_cursor_helper(show):
     """Show/hide the cursor"""
-    if app.platform == "windows":
-        import ctypes
-        import winreg
-
-        import win32con
-
-        try:
-            Registrykey = winreg.OpenKey(
-                winreg.HKEY_CURRENT_USER, r"Control Panel\Cursors", 0, winreg.KEY_WRITE
-            )
-
-            for value_name, value in default_cursor.items():
-                if show:
-                    winreg.SetValueEx(
-                        Registrykey, value_name, 0, winreg.REG_EXPAND_SZ, value
-                    )
-                else:
-                    winreg.SetValueEx(
-                        Registrykey, value_name, 0, winreg.REG_EXPAND_SZ, hidden_cursor
-                    )
-
-            winreg.CloseKey(Registrykey)
-
-            ctypes.windll.user32.SystemParametersInfoA(
-                win32con.SPI_SETCURSORS, 0, None, 0
-            )
-
-        except WindowsError:
-            print("Unable to show_cursor({})".format(str(show)))
-    else:
-        ctrl.cursor_visible(show)
+    ctrl.cursor_visible(show)
 
 
 def on_pop(active):

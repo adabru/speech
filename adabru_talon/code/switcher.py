@@ -10,33 +10,17 @@ from itertools import islice
 from pathlib import Path
 import subprocess
 
-# Construct at startup a list of overides for application names (similar to how homophone list is managed)
-# ie for a given talon recognition word set  `one note`, recognized this in these switcher functions as `ONENOTE`
-# the list is a comma seperated `<Recognized Words>, <Overide>`
-# TODO: Consider put list csv's (homophones.csv, app_name_overrides.csv) files together in a seperate directory,`knausj_talon/lists`
-cwd = os.path.dirname(os.path.realpath(__file__))
-overrides_directory = os.path.join(cwd, "app_names")
-override_file_name = f"app_name_overrides.{talon.app.platform}.csv"
-override_file_path = os.path.join(overrides_directory, override_file_name)
-
 mod = Module()
 mod.list("running", desc="all running applications")
 mod.list("launch", desc="all launchable applications")
 ctx = Context()
 
 # a list of the current overrides
-overrides = {}
+overrides = {"term": "Alacritty"}
 
 # a list of the currently running application names
 running_application_dict = {}
 
-
-mac_application_directories = [
-    "/Applications",
-    "/Applications/Utilities",
-    "/System/Applications",
-    "/System/Applications/Utilities",
-]
 
 words_to_exclude = [
     "zero",
@@ -64,108 +48,6 @@ words_to_exclude = [
     "visual",
     "windows",
 ]
-
-# on Windows, WindowsApps are not like normal applications, so
-# we use the shell:AppsFolder to populate the list of applications
-# rather than via e.g. the start menu. This way, all apps, including "modern" apps are
-# launchable. To easily retrieve the apps this makes available, navigate to shell:AppsFolder in Explorer
-if app.platform == "windows":
-    import os
-    import ctypes
-    import pywintypes
-    import pythoncom
-    import winerror
-
-    try:
-        import winreg
-    except ImportError:
-        # Python 2
-        import _winreg as winreg
-
-        bytes = lambda x: str(buffer(x))
-
-    from ctypes import wintypes
-    from win32com.shell import shell, shellcon
-    from win32com.propsys import propsys, pscon
-
-    # KNOWNFOLDERID
-    # https://msdn.microsoft.com/en-us/library/dd378457
-    # win32com defines most of these, except the ones added in Windows 8.
-    FOLDERID_AppsFolder = pywintypes.IID("{1e87508d-89c2-42f0-8a7e-645a0f50ca58}")
-
-    # win32com is missing SHGetKnownFolderIDList, so use ctypes.
-
-    _ole32 = ctypes.OleDLL("ole32")
-    _shell32 = ctypes.OleDLL("shell32")
-
-    _REFKNOWNFOLDERID = ctypes.c_char_p
-    _PPITEMIDLIST = ctypes.POINTER(ctypes.c_void_p)
-
-    _ole32.CoTaskMemFree.restype = None
-    _ole32.CoTaskMemFree.argtypes = (wintypes.LPVOID,)
-
-    _shell32.SHGetKnownFolderIDList.argtypes = (
-        _REFKNOWNFOLDERID,  # rfid
-        wintypes.DWORD,  # dwFlags
-        wintypes.HANDLE,  # hToken
-        _PPITEMIDLIST,
-    )  # ppidl
-
-    def get_known_folder_id_list(folder_id, htoken=None):
-        if isinstance(folder_id, pywintypes.IIDType):
-            folder_id = bytes(folder_id)
-        pidl = ctypes.c_void_p()
-        try:
-            _shell32.SHGetKnownFolderIDList(folder_id, 0, htoken, ctypes.byref(pidl))
-            return shell.AddressAsPIDL(pidl.value)
-        except WindowsError as e:
-            if e.winerror & 0x80070000 == 0x80070000:
-                # It's a WinAPI error, so re-raise it, letting Python
-                # raise a specific exception such as FileNotFoundError.
-                raise ctypes.WinError(e.winerror & 0x0000FFFF)
-            raise
-        finally:
-            if pidl:
-                _ole32.CoTaskMemFree(pidl)
-
-    def enum_known_folder(folder_id, htoken=None):
-        id_list = get_known_folder_id_list(folder_id, htoken)
-        folder_shell_item = shell.SHCreateShellItem(None, None, id_list)
-        items_enum = folder_shell_item.BindToHandler(
-            None, shell.BHID_EnumItems, shell.IID_IEnumShellItems
-        )
-        for item in items_enum:
-            yield item
-
-    def list_known_folder(folder_id, htoken=None):
-        result = []
-        for item in enum_known_folder(folder_id, htoken):
-            result.append(item.GetDisplayName(shellcon.SIGDN_NORMALDISPLAY))
-        result.sort(key=lambda x: x.upper())
-        return result
-
-    def get_windows_apps():
-        items = {}
-        for item in enum_known_folder(FOLDERID_AppsFolder):
-            try:
-                property_store = item.BindToHandler(
-                    None, shell.BHID_PropertyStore, propsys.IID_IPropertyStore
-                )
-                app_user_model_id = property_store.GetValue(
-                    pscon.PKEY_AppUserModel_ID
-                ).ToString()
-
-            except pywintypes.error:
-                continue
-
-            name = item.GetDisplayName(shellcon.SIGDN_NORMALDISPLAY)
-
-            # exclude anything with install/uninstall...
-            # 'cause I don't think we don't want 'em
-            if "install" not in name.lower():
-                items[name] = app_user_model_id
-
-        return items
 
 
 @mod.capture(rule="{self.running}")  # | <user.text>)")
@@ -213,23 +95,6 @@ def update_running_list():
 
     # batch update lists
     ctx.lists.update(lists)
-
-
-def update_overrides(name, flags):
-    """Updates the overrides list"""
-    global overrides
-    overrides = {}
-
-    if name is None or name == override_file_path:
-        # print("update_overrides")
-        with open(override_file_path, "r") as f:
-            for line in f:
-                line = line.rstrip()
-                line = line.split(",")
-                if len(line) == 2:
-                    overrides[line[0].lower()] = line[1].strip()
-
-        update_running_list()
 
 
 @mod.action_class
@@ -284,21 +149,8 @@ class Actions:
             actions.sleep(0.1)
 
     def switcher_launch(path: str):
-        """Launch a new application by path (all OSes), or AppUserModel_ID path on Windows"""
-        if app.platform != "windows":
-            ui.launch(path=path)
-        else:
-            is_valid_path = False
-            try:
-                current_path = Path(path)
-                is_valid_path = current_path.is_file()
-            except:
-                is_valid_path = False
-            if is_valid_path:
-                ui.launch(path=path)
-            else:
-                cmd = "explorer.exe shell:AppsFolder\\{}".format(path)
-                subprocess.Popen(cmd, shell=False)
+        """Launch a new application by path"""
+        ui.launch(path=path)
 
     def switcher_menu():
         """Open a menu of running apps to switch to"""
@@ -331,33 +183,11 @@ def gui_running(gui: imgui.GUI):
         actions.user.switcher_hide_running()
 
 
-def update_launch_list():
-    launch = {}
-    if app.platform == "mac":
-        for base in mac_application_directories:
-            if os.path.isdir(base):
-                for name in os.listdir(base):
-                    path = os.path.join(base, name)
-                    name = name.rsplit(".", 1)[0].lower()
-                    launch[name] = path
-
-    elif app.platform == "windows":
-        launch = get_windows_apps()
-        # actions.user.talon_pretty_print(launch)
-
-    ctx.lists["self.launch"] = actions.user.create_spoken_forms_from_map(
-        launch, words_to_exclude
-    )
-
-
 def ui_event(event, arg):
     if event in ("app_launch", "app_close"):
         update_running_list()
 
 
-# Currently update_launch_list only does anything on mac, so we should make sure
-# to initialize user launch to avoid getting "List not found: user.launch"
-# errors on other platforms.
 ctx.lists["user.launch"] = {}
 ctx.lists["user.running"] = {}
 
@@ -365,9 +195,6 @@ ctx.lists["user.running"] = {}
 
 
 def on_ready():
-    update_overrides(None, None)
-    fs.watch(overrides_directory, update_overrides)
-    update_launch_list()
     update_running_list()
     ui.register("", ui_event)
 
