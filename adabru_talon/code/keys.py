@@ -3,7 +3,7 @@ from typing import Set
 from talon import Module, Context, actions, app
 import sys
 
-default_alphabet = "air bat cap drum each fine gust harp sit jury ka look made near odd pit cu red sun trap urge vest when plex yank zip".split(
+default_alphabet = "air bat cap dream each fine gust harp sit jury ka look made near odd pit cu red sun trap urge vest when plex yank zip".split(
     " "
 )
 letters_string = "abcdefghijklmnopqrstuvwxyz"
@@ -113,9 +113,9 @@ def letters(m) -> str:
 ctx = Context()
 modifier_keys = {
     # If you find 'alt' is often misrecognized, try using 'alter'.
-    "alt": "alt",  # 'alter': 'alt',
-    "count": "ctrl",  # 'troll':   'ctrl',
-    "shift": "shift",  # 'sky':     'shift',
+    "al": "alt",  # 'alter': 'alt',
+    "con": "ctrl",  # 'troll':   'ctrl',
+    "shif": "shift",  # 'sky':     'shift',
     "super": "super",
 }
 if app.platform == "mac":
@@ -219,7 +219,6 @@ ctx.lists["self.arrow_key"] = {
 
 simple_keys = [
     "end",
-    "escape",
     "home",
     "insert",
     "pagedown",
@@ -229,15 +228,16 @@ simple_keys = [
 
 alternate_keys = {
     "wipe": "backspace",
+    "scape": "escape",
     "go": "enter",
     "race": "delete",
     "te": "tab",
     # 'junk': 'backspace',
     "page up": "pageup",
     "page down": "pagedown",
+    "menu key": "menu",
+    "print screen": "printscr",
 }
-alternate_keys["menu key"] = "menu"
-alternate_keys["print screen"] = "printscr"
 
 special_keys = {k: k for k in simple_keys}
 special_keys.update(alternate_keys)
