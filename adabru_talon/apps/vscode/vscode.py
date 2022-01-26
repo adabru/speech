@@ -6,45 +6,11 @@ ctx = Context()
 mac_ctx = Context()
 mod = Module()
 mod.apps.vscode = """
-os: mac
-and app.bundle: com.microsoft.VSCode
-os: mac
-and app.bundle: com.microsoft.VSCodeInsiders
-os: mac
-and app.bundle: com.visualstudio.code.oss
-"""
-mod.apps.vscode = """
-os: linux
-and app.name: Code
-os: linux
-and app.name: code-oss
-os: linux
-and app.name: code-insiders
-os: linux
-and app.name: VSCodium
-os: linux
-and app.name: Codium
-"""
-mod.apps.vscode = """
-os: windows
-and app.name: Visual Studio Code
-os: windows
-and app.name: Visual Studio Code Insiders
-os: windows
-and app.exe: Code.exe
-os: windows
-and app.exe: Code-Insiders.exe
-os: windows
-and app.name: VSCodium
-os: windows
-and app.exe: VSCodium.exe
+app.exe: code-oss
+app.exe: code-insiders
 """
 
 ctx.matches = r"""
-app: vscode
-"""
-mac_ctx.matches = r"""
-os: mac
 app: vscode
 """
 
@@ -144,13 +110,7 @@ class Actions:
 
     def command_palette():
         """Show command palette"""
-        actions.key("ctrl-shift-p")
-
-
-@mac_ctx.action_class("user")
-class MacUserActions:
-    def command_palette():
-        actions.key("cmd-shift-p")
+        actions.key("alt-space")
 
 
 @ctx.action_class("user")
@@ -203,7 +163,8 @@ class UserActions:
         actions.user.vscode("editor.action.insertCursorBelow")
 
     def multi_cursor_add_to_line_ends():
-        actions.user.vscode("editor.action.insertCursorAtEndOfEachLineSelected")
+        actions.user.vscode(
+            "editor.action.insertCursorAtEndOfEachLineSelected")
 
     def multi_cursor_disable():
         actions.key("escape")
@@ -243,7 +204,8 @@ class UserActions:
     def tab_jump(number: int):
         if number < 10:
             if is_mac:
-                actions.user.vscode_with_plugin(f"workbench.action.openEditorAtIndex{number}")
+                actions.user.vscode_with_plugin(
+                    f"workbench.action.openEditorAtIndex{number}")
             else:
                 actions.key("alt-{}".format(number))
 

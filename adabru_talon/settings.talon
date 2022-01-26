@@ -6,12 +6,6 @@ settings():
     # Enable if you'd like the picker gui to automatically appear when explorer has focus
     user.file_manager_auto_show_pickers = 0
 
-    # Set the max number of command lines per page in help
-    user.help_max_command_lines_per_page = 50
-
-    # Set the max number of contexts display per page in help
-    user.help_max_contexts_per_page = 20
-
     # The default amount used when scrolling continuously
     user.mouse_continuous_scroll_amount = 80
 
@@ -20,6 +14,7 @@ settings():
 
     # Enable pop click with 'control mouse' mode
     user.mouse_enable_pop_click = 1
+    user.mouse_enable_hiss_drag = 1
 
     # When enabled, the 'Scroll Mouse' GUI will not be shown.
     user.mouse_hide_mouse_gui = 0
@@ -32,9 +27,6 @@ settings():
 
     # The amount to scroll left/right
     user.mouse_wheel_horizontal_amount = 40
-
-    # Mouse grid and friends put the number one on the bottom left (vs on the top left)
-    user.grids_put_one_bottom_left = 1
 
     # The number of lines of command history to display by default
     user.command_history_display = 10

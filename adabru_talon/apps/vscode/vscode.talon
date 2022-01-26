@@ -4,14 +4,12 @@ app: vscode
 tag(): user.find_and_replace
 tag(): user.line_commands
 tag(): user.snippets
-tag(): user.splits
-tag(): user.tabs
-window reload: user.vscode("workbench.action.reloadWindow")
-window close: user.vscode("workbench.action.closeWindow")
+window reload: user.vscode(workbench.action.reloadWindow)
+window close: user.vscode(workbench.action.closeWindow)
 #multiple_cursor.py support end
 
 please [<user.text>]:
-    user.vscode("workbench.action.showCommands")
+    user.vscode(workbench.action.showCommands)
     insert(user.text or "")
 
 # Sidebar
@@ -211,21 +209,17 @@ install local: user.vscode("workbench.extensions.action.installVSIX")
 
 
 # multi cursor
-split right: user.split_window_right()
-split left: user.split_window_left()
-split down: user.split_window_down()
-split up: user.split_window_up()
-split (vertically | vertical): user.split_window_vertically()
-split (horizontally | horizontal): user.split_window_horizontally()
-split flip: user.split_flip()
-split window: user.split_window()
-split clear: user.split_clear()
-split clear all: user.split_clear_all()
-split next: user.split_next()
-split last: user.split_last()
-go split <number>: user.split_number(number)
+cursor multiple: user.multi_cursor_enable()
+cursor stop: user.multi_cursor_disable()
+cursor up: user.multi_cursor_add_above()
+cursor down: user.multi_cursor_add_below()
+cursor less: user.multi_cursor_select_fewer_occurrences()
+cursor more: user.multi_cursor_select_more_occurrences()
+cursor skip: user.multi_cursor_skip_occurrence()
+cursor all: user.multi_cursor_select_all_occurrences()
+cursor lines: user.multi_cursor_add_to_line_ends()
 
-# window splitting
+# pane splitting
 split right: user.split_window_right()
 split left: user.split_window_left()
 split down: user.split_window_down()
