@@ -3,7 +3,6 @@ from talon import Context, actions, ui, Module, app, clip
 is_mac = app.platform == "mac"
 
 ctx = Context()
-mac_ctx = Context()
 mod = Module()
 mod.apps.vscode = """
 app.exe: code-oss
@@ -115,74 +114,6 @@ class Actions:
 
 @ctx.action_class("user")
 class UserActions:
-    # splits.py support begin
-    def split_clear_all():
-        actions.user.vscode("workbench.action.editorLayoutSingle")
-
-    def split_clear():
-        actions.user.vscode("workbench.action.joinTwoGroups")
-
-    def split_flip():
-        actions.user.vscode("workbench.action.toggleEditorGroupLayout")
-
-    def split_last():
-        actions.user.vscode("workbench.action.focusLeftGroup")
-
-    def split_next():
-        actions.user.vscode_and_wait("workbench.action.focusRightGroup")
-
-    def split_window_down():
-        actions.user.vscode("workbench.action.moveEditorToBelowGroup")
-
-    def split_window_horizontally():
-        actions.user.vscode("workbench.action.splitEditorOrthogonal")
-
-    def split_window_left():
-        actions.user.vscode("workbench.action.moveEditorToLeftGroup")
-
-    def split_window_right():
-        actions.user.vscode("workbench.action.moveEditorToRightGroup")
-
-    def split_window_up():
-        actions.user.vscode("workbench.action.moveEditorToAboveGroup")
-
-    def split_window_vertically():
-        actions.user.vscode("workbench.action.splitEditor")
-
-    def split_window():
-        actions.user.vscode("workbench.action.splitEditor")
-
-    # splits.py support end
-
-    # multiple_cursor.py support begin
-    # note: vscode has no explicit mode for multiple cursors
-    def multi_cursor_add_above():
-        actions.user.vscode("editor.action.insertCursorAbove")
-
-    def multi_cursor_add_below():
-        actions.user.vscode("editor.action.insertCursorBelow")
-
-    def multi_cursor_add_to_line_ends():
-        actions.user.vscode(
-            "editor.action.insertCursorAtEndOfEachLineSelected")
-
-    def multi_cursor_disable():
-        actions.key("escape")
-
-    def multi_cursor_enable():
-        actions.skip()
-
-    def multi_cursor_select_all_occurrences():
-        actions.user.vscode("editor.action.selectHighlights")
-
-    def multi_cursor_select_fewer_occurrences():
-        actions.user.vscode("cursorUndo")
-
-    def multi_cursor_select_more_occurrences():
-        actions.user.vscode("editor.action.addSelectionToNextFindMatch")
-
-    def multi_cursor_skip_occurrence():
-        actions.user.vscode("editor.action.moveSelectionToNextFindMatch")
 
     # snippet.py support begin
     def snippet_search(text: str):
@@ -200,31 +131,6 @@ class UserActions:
         actions.user.vscode("workbench.action.openSnippets")
 
     # snippet.py support end
-
-    def tab_jump(number: int):
-        if number < 10:
-            if is_mac:
-                actions.user.vscode_with_plugin(
-                    f"workbench.action.openEditorAtIndex{number}")
-            else:
-                actions.key("alt-{}".format(number))
-
-    def tab_final():
-        if is_mac:
-            actions.user.vscode("workbench.action.lastEditorInGroup")
-        else:
-            actions.key("alt-0")
-
-    # splits.py support begin
-    def split_number(index: int):
-        """Navigates to a the specified split"""
-        if index < 9:
-            if is_mac:
-                actions.key("cmd-{}".format(index))
-            else:
-                actions.key("ctrl-{}".format(index))
-
-    # splits.py support end
 
     # find_and_replace.py support begin
 
@@ -308,13 +214,3 @@ class UserActions:
             actions.key("cmd-enter")
         else:
             actions.key("ctrl-alt-enter")
-
-    def select_previous_occurrence(text: str):
-        actions.edit.find(text)
-        actions.sleep("100ms")
-        actions.key("shift-enter esc")
-
-    def select_next_occurrence(text: str):
-        actions.edit.find(text)
-        actions.sleep("100ms")
-        actions.key("esc")

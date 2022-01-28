@@ -2,14 +2,13 @@
 app: vscode
 -
 tag(): user.find_and_replace
-tag(): user.line_commands
 tag(): user.snippets
-window reload: user.vscode(workbench.action.reloadWindow)
-window close: user.vscode(workbench.action.closeWindow)
+window reload: user.vscode("workbench.action.reloadWindow")
+window close: user.vscode("workbench.action.closeWindow")
 #multiple_cursor.py support end
 
 please [<user.text>]:
-    user.vscode(workbench.action.showCommands)
+    user.vscode("workbench.action.showCommands")
     insert(user.text or "")
 
 # Sidebar
@@ -209,27 +208,110 @@ install local: user.vscode("workbench.extensions.action.installVSIX")
 
 
 # multi cursor
-cursor multiple: user.multi_cursor_enable()
-cursor stop: user.multi_cursor_disable()
-cursor up: user.multi_cursor_add_above()
-cursor down: user.multi_cursor_add_below()
-cursor less: user.multi_cursor_select_fewer_occurrences()
-cursor more: user.multi_cursor_select_more_occurrences()
-cursor skip: user.multi_cursor_skip_occurrence()
-cursor all: user.multi_cursor_select_all_occurrences()
-cursor lines: user.multi_cursor_add_to_line_ends()
+cursor stop: key("escape")
+cursor up: user.vscode("editor.action.insertCursorAbove")
+cursor down: user.vscode("editor.action.insertCursorBelow")
+cursor less: user.vscode("cursorUndo")
+cursor more: user.vscode("editor.action.addSelectionToNextFindMatch")
+cursor skip: user.vscode("editor.action.moveSelectionToNextFindMatch")
+cursor all: user.vscode("editor.action.selectHighlights")
+cursor lines: user.vscode("editor.action.insertCursorAtEndOfEachLineSelected")
 
 # pane splitting
-split right: user.split_window_right()
-split left: user.split_window_left()
-split down: user.split_window_down()
-split up: user.split_window_up()
-split (vertically | vertical): user.split_window_vertically()
-split (horizontally | horizontal): user.split_window_horizontally()
-split flip: user.split_flip()
-split window: user.split_window()
-split clear: user.split_clear()
-split clear all: user.split_clear_all()
-split next: user.split_next()
-split last: user.split_last()
-go split <number>: user.split_number(number)
+split right: user.vscode("workbench.action.moveEditorToRightGroup")
+split left: user.vscode("workbench.action.moveEditorToLeftGroup")
+split down: user.vscode("workbench.action.moveEditorToBelowGroup")
+split up: user.vscode("workbench.action.moveEditorToAboveGroup")
+split (vertically | vertical): user.vscode("workbench.action.splitEditor")
+split (horizontally | horizontal): user.vscode("workbench.action.splitEditorOrthogonal")
+split flip: user.vscode("workbench.action.toggleEditorGroupLayout")
+split window: user.vscode("workbench.action.splitEditor")
+split clear: user.vscode("workbench.action.joinTwoGroups")
+split clear all: user.vscode("workbench.action.editorLayoutSingle")
+split next: user.vscode_and_wait("workbench.action.focusRightGroup")
+split last: user.vscode("workbench.action.focusLeftGroup")
+go split <number>: key(ctrl-number)
+
+# line commands
+lend: edit.line_end()
+bend: edit.line_start()
+go <number>: edit.jump_line(number)
+go <number> end:
+    edit.jump_line(number)
+    edit.line_end()
+comment [line] <number>:
+    user.select_range(number, number)
+    code.toggle_comment()
+comment <number> until <number>:
+    user.select_range(number_1, number_2)
+    code.toggle_comment()
+clear [line] <number>:
+    edit.jump_line(number)
+    user.select_range(number, number)
+    edit.delete()
+clear <number> until <number>:
+    user.select_range(number_1, number_2)
+    edit.delete()
+copy [line] <number>:
+    user.select_range(number, number)
+    edit.copy()
+copy <number> until <number>:
+    user.select_range(number_1, number_2)
+    edit.copy()
+cut [line] <number>:
+    user.select_range(number, number)
+    edit.cut()
+cut [line] <number> until <number>:
+    user.select_range(number_1, number_2)
+    edit.cut()
+(paste | replace) <number> until <number>:
+    user.select_range(number_1, number_2)
+    edit.paste()
+(select | cell | sell) [line] <number>: user.select_range(number, number)
+(select | cell | sell) <number> until <number>: user.select_range(number_1, number_2)
+tab that: edit.indent_more()
+tab [line] <number>:
+    edit.jump_line(number)
+    edit.indent_more()
+tab <number> until <number>:
+    user.select_range(number_1, number_2)
+    edit.indent_more()
+retab that: edit.indent_less()
+retab [line] <number>:
+    user.select_range(number, number)
+    edit.indent_less()
+retab <number> until <number>:
+    user.select_range(number_1, number_2)
+    edit.indent_less()
+drag [line] down: edit.line_swap_down()
+drag [line] up: edit.line_swap_up()
+drag up [line] <number>:
+    user.select_range(number, number)
+    edit.line_swap_up()
+drag up <number> until <number>:
+    user.select_range(number_1, number_2)
+    edit.line_swap_up()
+drag down [line] <number>:
+    user.select_range(number, number)
+    edit.line_swap_down()
+drag down <number> until <number>:
+    user.select_range(number_1, number_2)
+    edit.line_swap_down()
+clone (line|that): edit.line_clone()
+
+# tabs
+tab left: user.vscode("workbench.action.previousEditor")
+tab right: user.vscode("workbench.action.nextEditor")
+tab close: user.vscode("workbench.action.closeActiveEditor")
+tab (reopen|restore): user.vscode("workbench.action.reopenClosedEditor")
+go tab one: user.vscode("workbench.action.openEditorAtIndex1")
+go tab two: user.vscode("workbench.action.openEditorAtIndex2")
+go tab three: user.vscode("workbench.action.openEditorAtIndex3")
+go tab four: user.vscode("workbench.action.openEditorAtIndex4")
+go tab five: user.vscode("workbench.action.openEditorAtIndex5")
+go tab six: user.vscode("workbench.action.openEditorAtIndex6")
+go tab seven: user.vscode("workbench.action.openEditorAtIndex7")
+go tab eight: user.vscode("workbench.action.openEditorAtIndex8")
+go tab nine: user.vscode("workbench.action.openEditorAtIndex9")
+# user.vscode_with_plugin(f"workbench.action.openEditorAtIndex{number}")
+go tab final: user.vscode("workbench.action.lastEditorInGroup")

@@ -18,16 +18,15 @@ scroll down: edit.page_down()
 copy that: edit.copy()
 cut that: edit.cut()
 paste that: edit.paste()
-undo that: edit.undo()
-redo that: edit.redo()
+undo: edit.undo()
+redo: edit.redo()
 paste match: edit.paste_match_style()
 file save: edit.save()
-slap: edit.line_insert_down()
 
 # repeat commands
 <user.ordinals>: core.repeat_command(ordinals-1)
 <number_small> times: core.repeat_command(number_small-1)
-again: core.repeat_command(1)
+twice | again: core.repeat_command(1)
 
 #  window management
 window (new|open): app.window_open()
