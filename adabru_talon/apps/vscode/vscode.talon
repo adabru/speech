@@ -1,7 +1,7 @@
 #custom vscode commands go here
 app: vscode
 -
-tag(): user.find_and_replace
+
 tag(): user.snippets
 window reload: user.vscode("workbench.action.reloadWindow")
 window close: user.vscode("workbench.action.closeWindow")
@@ -171,10 +171,6 @@ terminal scroll up: user.vscode("workbench.action.terminal.scrollUp")
 terminal scroll down: user.vscode("workbench.action.terminal.scrollDown")
 terminal <number_small>: user.vscode_terminal(number_small)
 
-#TODO: should this be added to linecommands?
-copy line down: user.vscode("editor.action.copyLinesDownAction")
-copy line up: user.vscode("editor.action.copyLinesUpAction")
-
 #Expand/Shrink AST Selection
 select less: user.vscode("editor.action.smartSelect.shrink")
 select (more|this): user.vscode("editor.action.smartSelect.expand")
@@ -232,48 +228,51 @@ split next: user.vscode_and_wait("workbench.action.focusRightGroup")
 split last: user.vscode("workbench.action.focusLeftGroup")
 go split <number>: key(ctrl-number)
 
-# line commands
-lend: edit.line_end()
-bend: edit.line_start()
-go <number>: edit.jump_line(number)
-go <number> end:
-    edit.jump_line(number)
-    edit.line_end()
-comment [line] <number>:
-    user.select_range(number, number)
-    code.toggle_comment()
-comment <number> until <number>:
+# block commands
+block comment <number> until <number>:
     user.select_range(number_1, number_2)
     code.toggle_comment()
-clear [line] <number>:
-    edit.jump_line(number)
-    user.select_range(number, number)
-    edit.delete()
-clear <number> until <number>:
+block clear <number> until <number>:
     user.select_range(number_1, number_2)
     edit.delete()
-copy [line] <number>:
-    user.select_range(number, number)
-    edit.copy()
-copy <number> until <number>:
+block copy <number> until <number>:
     user.select_range(number_1, number_2)
     edit.copy()
-cut [line] <number>:
-    user.select_range(number, number)
-    edit.cut()
-cut [line] <number> until <number>:
+block cut <number> until <number>:
     user.select_range(number_1, number_2)
     edit.cut()
-(paste | replace) <number> until <number>:
+block replace <number> until <number>:
     user.select_range(number_1, number_2)
     edit.paste()
-(select | cell | sell) [line] <number>: user.select_range(number, number)
-(select | cell | sell) <number> until <number>: user.select_range(number_1, number_2)
-tab that: edit.indent_more()
-tab [line] <number>:
+block <number> until <number>: user.select_range(number_1, number_2)
+
+# line commands
+line copy down: user.vscode("editor.action.copyLinesDownAction")
+line copy up: user.vscode("editor.action.copyLinesUpAction")
+line <number>: edit.jump_line(number)
+line <number> end:
+    edit.jump_line(number)
+    edit.line_end()
+line comment <number>:
+    user.select_range(number, number)
+    code.toggle_comment()
+line clear <number>:
+    edit.jump_line(number)
+    user.vscode("editor.action.deleteLines")
+line clear:
+    user.vscode("editor.action.deleteLines")
+line copy <number>:
+    user.select_range(number, number)
+    edit.copy()
+line cut <number>:
+    user.select_range(number, number)
+    edit.cut()
+line select <number>: user.select_range(number, number)
+indent that: edit.indent_more()
+indent [line] <number>:
     edit.jump_line(number)
     edit.indent_more()
-tab <number> until <number>:
+indent <number> until <number>:
     user.select_range(number_1, number_2)
     edit.indent_more()
 retab that: edit.indent_less()
@@ -299,19 +298,104 @@ drag down <number> until <number>:
     edit.line_swap_down()
 clone (line|that): edit.line_clone()
 
+# find and replace
+find: user.find("")
+find <user.text>: user.find(text)
+find all: user.find_everywhere("")
+find all <user.text>: user.find_everywhere(text)
+find case : user.find_toggle_match_by_case()
+find word : user.find_toggle_match_by_word()
+find expression : user.find_toggle_match_by_regex()
+find next: actions.user.vscode("editor.action.nextMatchFindAction")
+find previous: actions.user.vscode("editor.action.previousMatchFindAction")
+replace this [<user.text>]: user.replace(text or "")
+replace all: user.replace_everywhere("")
+replace <user.text> all: user.replace_everywhere(text)
+replace confirm that: user.replace_confirm()
+replace confirm all: user.replace_confirm_all()
+
+#quick replace commands, modeled after jetbrains
+clear last <user.text> [over]:
+    user.select_previous_occurrence(text)
+    sleep(100ms)
+    edit.delete()
+clear next <user.text> [over]:
+    user.select_next_occurrence(text)
+    sleep(100ms)
+    edit.delete()
+clear last clip:
+    user.select_previous_occurrence(clip.text())
+    edit.delete()
+clear next clip:
+    user.select_next_occurrence(clip.text())
+    sleep(100ms)
+    edit.delete()
+comment last <user.text> [over]:
+    user.select_previous_occurrence(text)
+    sleep(100ms)
+    code.toggle_comment()
+comment last clip:
+    user.select_previous_occurrence(clip.text())
+    sleep(100ms)
+    code.toggle_comment()
+comment next <user.text> [over]:
+    user.select_next_occurrence(text)
+    sleep(100ms)
+    code.toggle_comment()
+comment next clip:
+    user.select_next_occurrence(clip.text())
+    sleep(100ms)
+    code.toggle_comment()
+go last <user.text> [over]:
+    user.select_previous_occurrence(text)
+    sleep(100ms)
+    edit.right()
+go last clip:
+    user.select_previous_occurrence(clip.text())
+    sleep(100ms)
+    edit.right()
+go next <user.text> [over]:
+    user.select_next_occurrence(text)
+    edit.right()
+go next clip:
+    user.select_next_occurrence(clip.text())
+    edit.right()
+paste last <user.text> [over]:
+    user.select_previous_occurrence(text)
+    sleep(100ms)
+    edit.right()
+    edit.paste()
+paste next <user.text> [over]:
+    user.select_next_occurrence(text)
+    sleep(100ms)
+    edit.right()
+    edit.paste()
+replace last <user.text> [over]:
+    user.select_previous_occurrence(text)
+    sleep(100ms)
+    edit.paste()
+replace next <user.text> [over]:
+    user.select_next_occurrence(text)
+    sleep(100ms)
+    edit.paste()
+select last <user.text> [over]: user.select_previous_occurrence(text)
+select next <user.text> [over]: user.select_next_occurrence(text)
+select last clip: user.select_previous_occurrence(clip.text())
+select next clip: user.select_next_occurrence(clip.text())
+
 # tabs
 tab left: user.vscode("workbench.action.previousEditor")
 tab right: user.vscode("workbench.action.nextEditor")
 tab close: user.vscode("workbench.action.closeActiveEditor")
 tab (reopen|restore): user.vscode("workbench.action.reopenClosedEditor")
-go tab one: user.vscode("workbench.action.openEditorAtIndex1")
-go tab two: user.vscode("workbench.action.openEditorAtIndex2")
-go tab three: user.vscode("workbench.action.openEditorAtIndex3")
-go tab four: user.vscode("workbench.action.openEditorAtIndex4")
-go tab five: user.vscode("workbench.action.openEditorAtIndex5")
-go tab six: user.vscode("workbench.action.openEditorAtIndex6")
-go tab seven: user.vscode("workbench.action.openEditorAtIndex7")
-go tab eight: user.vscode("workbench.action.openEditorAtIndex8")
-go tab nine: user.vscode("workbench.action.openEditorAtIndex9")
+tab one: user.vscode("workbench.action.openEditorAtIndex1")
+tab two: user.vscode("workbench.action.openEditorAtIndex2")
+tab three: user.vscode("workbench.action.openEditorAtIndex3")
+tab four: user.vscode("workbench.action.openEditorAtIndex4")
+tab five: user.vscode("workbench.action.openEditorAtIndex5")
+tab six: user.vscode("workbench.action.openEditorAtIndex6")
+tab seven: user.vscode("workbench.action.openEditorAtIndex7")
+tab eight: user.vscode("workbench.action.openEditorAtIndex8")
+tab nine: user.vscode("workbench.action.openEditorAtIndex9")
 # user.vscode_with_plugin(f"workbench.action.openEditorAtIndex{number}")
-go tab final: user.vscode("workbench.action.lastEditorInGroup")
+tab final: user.vscode("workbench.action.lastEditorInGroup")

@@ -16,7 +16,10 @@ mod.list("launch", desc="all launchable applications")
 ctx = Context()
 
 # a list of the current overrides
-overrides = {"term": "Alacritty"}
+overrides = {
+    "term": "Alacritty",
+    "web": "Vivaldi-stable",
+}
 
 # a list of the currently running application names
 running_application_dict = {}
