@@ -2,6 +2,11 @@ app: vivaldi-stable
 -
 address: key(ctrl-l)
 search: key(ctrl-k)
+search <phrase>:
+    key(ctrl-k)
+    sleep(50ms)
+    insert(phrase)
+    key(enter)
 copy address:
     key(ctrl-l)
     sleep(50ms)

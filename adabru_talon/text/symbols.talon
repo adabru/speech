@@ -32,23 +32,26 @@ empty escaped string:
 (inside parens | args):
 	insert("()")
 	key(left)
-inside (squares | square brackets | list):
+inside squares:
 	insert("[]")
 	key(left)
-inside (bracket | braces):
+inside bracket:
 	insert("{}")
 	key(left)
 inside percent:
 	insert("%%")
 	key(left)
-inside (quotes | string):
+inside quotes:
 	insert("''")
 	key(left)
-inside (double quotes | dubquotes):
+inside doubles:
     insert('""')
 	key(left)
 inside (graves | back ticks):
 	insert("``")
+	key(left)
+inside angles:
+	insert("<>")
 	key(left)
 angle that:
     text = edit.selected_text()

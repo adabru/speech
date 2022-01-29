@@ -114,7 +114,7 @@ class Actions:
         """Selects lines from line_start to line line_end"""
         actions.edit.jump_line(line_start)
 
-        number_of_lines = line_end - line_start
+        number_of_lines = line_end - line_start + 1
         for i in range(0, number_of_lines):
             actions.edit.extend_line_down()
 

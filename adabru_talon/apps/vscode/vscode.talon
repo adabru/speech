@@ -229,22 +229,32 @@ split last: user.vscode("workbench.action.focusLeftGroup")
 go split <number>: key(ctrl-number)
 
 # block commands
-block comment <number> until <number>:
+block comment <number> through <number>:
     user.select_range(number_1, number_2)
     code.toggle_comment()
-block clear <number> until <number>:
+block clear <number> through <number>:
     user.select_range(number_1, number_2)
     edit.delete()
-block copy <number> until <number>:
+block copy <number> through <number>:
     user.select_range(number_1, number_2)
     edit.copy()
-block cut <number> until <number>:
+block cut <number> through <number>:
     user.select_range(number_1, number_2)
     edit.cut()
-block replace <number> until <number>:
+block replace <number> through <number>:
     user.select_range(number_1, number_2)
     edit.paste()
-block <number> until <number>: user.select_range(number_1, number_2)
+block <number> through <number>: user.select_range(number_1, number_2)
+block indent <number> through <number>:
+    user.select_range(number_1, number_2)
+    user.vscode("editor.action.indentLines")
+block outdent <number> through <number>:
+    user.select_range(number_1, number_2)
+    user.vscode("editor.action.outdentLines")
+block clone <number> through <number>:
+    user.select_range(number_1, number_2)
+    user.vscode("editor.action.copyLinesDownAction")
+
 
 # line commands
 line copy down: user.vscode("editor.action.copyLinesDownAction")
@@ -268,35 +278,17 @@ line cut <number>:
     user.select_range(number, number)
     edit.cut()
 line select <number>: user.select_range(number, number)
-indent that: edit.indent_more()
-indent [line] <number>:
+line clone: user.vscode("editor.action.copyLinesDownAction")
+line indent: user.vscode("editor.action.indentLines")
+line indent <number>:
     edit.jump_line(number)
-    edit.indent_more()
-indent <number> until <number>:
-    user.select_range(number_1, number_2)
-    edit.indent_more()
-retab that: edit.indent_less()
-retab [line] <number>:
-    user.select_range(number, number)
-    edit.indent_less()
-retab <number> until <number>:
-    user.select_range(number_1, number_2)
-    edit.indent_less()
-drag [line] down: edit.line_swap_down()
-drag [line] up: edit.line_swap_up()
-drag up [line] <number>:
-    user.select_range(number, number)
-    edit.line_swap_up()
-drag up <number> until <number>:
-    user.select_range(number_1, number_2)
-    edit.line_swap_up()
-drag down [line] <number>:
-    user.select_range(number, number)
-    edit.line_swap_down()
-drag down <number> until <number>:
-    user.select_range(number_1, number_2)
-    edit.line_swap_down()
-clone (line|that): edit.line_clone()
+    user.vscode("editor.action.indentLines")
+line outdent: user.vscode("editor.action.outdentLines")
+line outdent <number>:
+    edit.jump_line(number)
+    user.vscode("editor.action.outdentLines")
+line down: edit.line_swap_down()
+line up: edit.line_swap_up()
 
 # find and replace
 find: user.find("")
