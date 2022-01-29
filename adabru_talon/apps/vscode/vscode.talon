@@ -20,7 +20,7 @@ bar search: user.vscode("workbench.view.search")
 bar source: user.vscode("workbench.view.scm")
 bar switch: user.vscode("workbench.action.toggleSidebarVisibility")
 
-symbol hunt [<user.text>]:
+symbol find [<user.text>]:
     user.vscode("workbench.action.gotoSymbol")
     sleep(50ms)
     insert(text or "")
@@ -46,7 +46,7 @@ wrap switch: user.vscode("editor.action.toggleWordWrap")
 zen switch: user.vscode("workbench.action.toggleZenMode")
 
 # File Commands
-file hunt [<user.text>]:
+file find [<user.text>]:
     user.vscode("workbench.action.quickOpen")
     sleep(50ms)
     insert(text or "")
@@ -61,7 +61,7 @@ file move:
     sleep(150ms)
 file open folder: user.vscode("revealFileInOS")
 file reveal: user.vscode("workbench.files.action.showActiveFileInExplorer")
-save ugly: user.vscode("workbench.action.files.saveWithoutFormatting")
+file save ugly: user.vscode("workbench.action.files.saveWithoutFormatting")
 
 # Language Features
 suggest show: user.vscode("editor.action.triggerSuggest")
@@ -287,8 +287,14 @@ line outdent: user.vscode("editor.action.outdentLines")
 line outdent <number>:
     edit.jump_line(number)
     user.vscode("editor.action.outdentLines")
-line down: edit.line_swap_down()
-line up: edit.line_swap_up()
+line down: user.vscode("editor.action.moveLinesDownAction")
+line up: user.vscode("editor.action.moveLinesUpAction")
+line comment$: user.vscode("editor.action.commentLine")
+line comment <user.text> [over]:
+    user.vscode("editor.action.commentLine")
+	insert(user.text)
+    insert(" ")
+
 
 # find and replace
 find: user.find("")

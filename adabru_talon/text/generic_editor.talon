@@ -4,12 +4,6 @@ find:
 next one:
     edit.find_next()
 
-go word left:
-    edit.word_left()
-
-go word right:
-    edit.word_right()
-
 go left:
     edit.left()
 
@@ -44,15 +38,6 @@ select up:
 select down:
     edit.extend_line_down()
 
-select word:
-    edit.select_word()
-
-select word left:
-    edit.extend_word_left()
-
-select word right:
-    edit.extend_word_right()
-
 # deleting
 clear left:
     key(backspace)
@@ -68,17 +53,6 @@ clear down:
     edit.extend_line_down()
     edit.delete()
 
-clear word:
-    edit.delete_word()
-
-clear word left:
-    edit.extend_word_left()
-    edit.delete()
-
-clear word right:
-    edit.extend_word_right()
-    edit.delete()
-
 clear all:
     edit.select_all()
     edit.delete()
@@ -88,33 +62,9 @@ copy all:
     edit.select_all()
     edit.copy()
 
-copy word:
-    edit.select_word()
-    edit.copy()
-
-copy word left:
-    edit.extend_word_left()
-    edit.copy()
-
-copy word right:
-    edit.extend_word_right()
-    edit.copy()
-
 #cut commands
 cut all:
     edit.select_all()
-    edit.cut()
-
-cut word:
-    edit.select_word()
-    edit.cut()
-
-cut word left:
-    edit.extend_word_left()
-    edit.cut()
-
-cut word right:
-    edit.extend_word_right()
     edit.cut()
 
 # line commands
@@ -126,3 +76,37 @@ line copy:
 line cut:
     edit.select_line()
     edit.cut()
+
+# word commands
+word cut:
+    edit.select_word()
+    edit.cut()
+word left: edit.word_left()
+word right: edit.word_right()
+word select: edit.select_word()
+word select left: edit.extend_word_left()
+word select right: edit.extend_word_right()
+word clear left:
+    edit.extend_word_left()
+    edit.delete()
+word clear right:
+    edit.extend_word_right()
+    edit.delete()
+word clear:
+    edit.delete_word()
+word copy:
+    edit.select_word()
+    edit.copy()
+word copy left:
+    edit.extend_word_left()
+    edit.copy()
+word copy right:
+    edit.extend_word_right()
+    edit.copy()
+word cut left:
+    edit.extend_word_left()
+    edit.cut()
+word cut right:
+    edit.extend_word_right()
+    edit.cut()
+

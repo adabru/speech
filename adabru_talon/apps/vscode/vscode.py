@@ -17,21 +17,6 @@ app: vscode
 @ctx.action_class("app")
 class AppActions:
     # talon app actions
-    def tab_open():
-        actions.user.vscode("workbench.action.files.newUntitledFile")
-
-    def tab_close():
-        actions.user.vscode("workbench.action.closeActiveEditor")
-
-    def tab_next():
-        actions.user.vscode("workbench.action.nextEditorInGroup")
-
-    def tab_previous():
-        actions.user.vscode("workbench.action.previousEditorInGroup")
-
-    def tab_reopen():
-        actions.user.vscode("workbench.action.reopenClosedEditor")
-
     def window_close():
         actions.user.vscode("workbench.action.closeWindow")
 
@@ -49,31 +34,10 @@ class CodeActions:
 @ctx.action_class("edit")
 class EditActions:
     # talon edit actions
-    def indent_more():
-        actions.user.vscode("editor.action.indentLines")
-
-    def indent_less():
-        actions.user.vscode("editor.action.outdentLines")
-
-    def save_all():
-        actions.user.vscode("workbench.action.files.saveAll")
-
     def find(text=None):
-        if is_mac:
-            actions.key("cmd-f")
-        else:
-            actions.key("ctrl-f")
+        actions.key("ctrl-f")
         if text is not None:
             actions.insert(text)
-
-    def line_swap_up():
-        actions.key("alt-up")
-
-    def line_swap_down():
-        actions.key("alt-down")
-
-    def line_clone():
-        actions.key("shift-alt-down")
 
     def jump_line(n: int):
         actions.user.vscode("workbench.action.gotoLine")
