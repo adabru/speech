@@ -7,7 +7,7 @@ from talon import actions
 from talon import Module
 import re
 
-from .extensions import file_extensions
+from .file_extensions import file_extensions
 from .numbers import digits_map, teens, scales, tens
 from .abbreviate import abbreviations
 from .keys import symbol_key_words
@@ -24,7 +24,8 @@ FANCY_REGULAR_EXPRESSION = r"[A-Z]?[a-z]+|[A-Z]+(?![a-z])|[0-9]+"
 FILE_EXTENSIONS_REGEX = "|".join(
     re.escape(file_extension.strip()) + "$" for file_extension in file_extensions.values()
 )
-SYMBOLS_REGEX = "|".join(re.escape(symbol) for symbol in set(symbol_key_words.values()))
+SYMBOLS_REGEX = "|".join(re.escape(symbol)
+                         for symbol in set(symbol_key_words.values()))
 REGEX_NO_SYMBOLS = re.compile(
     "|".join(
         [
@@ -365,14 +366,16 @@ class Actions:
         generate_subsequences: bool = True,
     ) -> Dict[str, Any]:
         """Create spoken forms for all sources in a map, doing conflict resolution"""
-        all_spoken_forms: defaultdict[str, List[SpeakableItem]] = defaultdict(list)
+        all_spoken_forms: defaultdict[str,
+                                      List[SpeakableItem]] = defaultdict(list)
 
         for name, value in sources.items():
             spoken_forms = actions.user.create_spoken_forms(
                 name, words_to_exclude, minimum_term_length, generate_subsequences
             )
             for spoken_form in spoken_forms:
-                all_spoken_forms[spoken_form].append(SpeakableItem(name, value))
+                all_spoken_forms[spoken_form].append(
+                    SpeakableItem(name, value))
 
         final_spoken_forms = {}
         for spoken_form, spoken_form_sources in all_spoken_forms.items():

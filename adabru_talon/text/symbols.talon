@@ -35,7 +35,7 @@ empty escaped string:
 inside squares:
 	insert("[]")
 	key(left)
-inside bracket:
+inside braces:
 	insert("{}")
 	key(left)
 inside percent:

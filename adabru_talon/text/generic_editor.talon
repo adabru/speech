@@ -1,25 +1,25 @@
-find:
+find$:
     edit.find()
 
 next one:
     edit.find_next()
 
-go left:
+left:
     edit.left()
 
-go right:
+right:
     edit.right()
 
-go up:
+up:
     edit.up()
 
-go down:
+down:
     edit.down()
 
-go bottom:
+bottom:
     edit.file_end()
 
-go top:
+top:
     edit.file_start()
 
 # selecting
@@ -39,21 +39,15 @@ select down:
     edit.extend_line_down()
 
 # deleting
-clear left:
-    key(backspace)
-
-clear right:
-    key(delete)
-
-clear up:
+wipe up:
     edit.extend_line_up()
     edit.delete()
 
-clear down:
+wipe down:
     edit.extend_line_down()
     edit.delete()
 
-clear all:
+wipe all:
     edit.select_all()
     edit.delete()
 
@@ -69,7 +63,7 @@ cut all:
 
 # line commands
 line select: edit.select_line()
-line clear: edit.delete_line()
+line wipe: edit.delete_line()
 line copy:
     edit.select_line()
     edit.copy()
@@ -86,13 +80,13 @@ word right: edit.word_right()
 word select: edit.select_word()
 word select left: edit.extend_word_left()
 word select right: edit.extend_word_right()
-word clear left:
+word wipe left:
     edit.extend_word_left()
     edit.delete()
-word clear right:
+word wipe right:
     edit.extend_word_right()
     edit.delete()
-word clear:
+word wipe:
     edit.delete_word()
 word copy:
     edit.select_word()

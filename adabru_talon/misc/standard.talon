@@ -21,7 +21,7 @@ paste: edit.paste()
 undo: edit.undo()
 redo: edit.redo()
 paste match: edit.paste_match_style()
-file save: edit.save()
+[file] save: edit.save()
 
 # repeat commands
 <user.ordinals>: core.repeat_command(ordinals-1)
@@ -51,13 +51,19 @@ desk next: key(ctrl-alt-right)
 desk left: key(ctrl-alt-left)
 
 # media keys
-volume up: key(volup)
-volume down: key(voldown)
-set volume <number>: user.media_set_volume(number)
-(volume|media) mute: key(mute)
+volume up: user.system_command("pactl set-sink-volume 0 +10%")
+volume down: user.system_command("pactl set-sink-volume 0 -10%")
+volume <number>: user.system_command("pactl set-sink-volume 0 {number}%")
+volume mute: user.system_command("pactl set-sink-mute @DEFAULT_SINK@ toggle")
 [media] play next: key(next)
 [media] play previous: key(prev)
 media (play | pause): key(play)
+
+# brightness
+brightness up: user.system_command("brillo -A 10")
+brightness down: user.system_command("brillo -U 10")
+brightness <number>: user.system_command("brillo -S {number}")
+brightnessp dot <number>: user.system_command("brillo -S .{number}")
 
 # macro
 macro record: user.macro_record()

@@ -228,13 +228,13 @@ simple_keys = [
 
 alternate_keys = {
     "wipe": "backspace",
-    "scape": "escape",
+    "out": "escape",
     "go": "enter",
     "race": "delete",
     "te": "tab",
     # 'junk': 'backspace',
-    "page up": "pageup",
-    "page down": "pagedown",
+    "pup": "pageup",
+    "pown": "pagedown",
     "menu key": "menu",
     "print screen": "printscr",
 }

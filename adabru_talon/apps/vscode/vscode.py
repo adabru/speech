@@ -34,11 +34,6 @@ class CodeActions:
 @ctx.action_class("edit")
 class EditActions:
     # talon edit actions
-    def find(text=None):
-        actions.key("ctrl-f")
-        if text is not None:
-            actions.insert(text)
-
     def jump_line(n: int):
         actions.user.vscode("workbench.action.gotoLine")
         actions.insert(str(n))
@@ -97,10 +92,11 @@ class Actions:
 
     # find_and_replace.py support begin
 
-    def find(text: str):
+    def find(text: str = None):
         """Triggers find in current editor"""
         actions.key("ctrl-f")
-        actions.insert(text)
+        if text is not None:
+            actions.insert(text)
 
     def find_everywhere(text: str):
         """Triggers find across project"""

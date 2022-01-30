@@ -50,6 +50,12 @@ file find [<user.text>]:
     user.vscode("workbench.action.quickOpen")
     sleep(50ms)
     insert(text or "")
+file open [<user.text>]:
+    user.vscode("workbench.action.quickOpen")
+    sleep(50ms)
+    insert(text or "")
+    sleep(500ms)
+    key(enter)
 file copy path: user.vscode("copyFilePath")
 file create sibling: user.vscode_and_wait("explorer.newFile")
 file create: user.vscode("workbench.action.files.newUntitledFile")
@@ -226,13 +232,13 @@ split clear: user.vscode("workbench.action.joinTwoGroups")
 split clear all: user.vscode("workbench.action.editorLayoutSingle")
 split next: user.vscode_and_wait("workbench.action.focusRightGroup")
 split last: user.vscode("workbench.action.focusLeftGroup")
-go split <number>: key(ctrl-number)
+split <number>: key("ctrl-{number}")
 
 # block commands
 block comment <number> through <number>:
     user.select_range(number_1, number_2)
     code.toggle_comment()
-block clear <number> through <number>:
+block wipe <number> through <number>:
     user.select_range(number_1, number_2)
     edit.delete()
 block copy <number> through <number>:
@@ -266,10 +272,10 @@ line <number> end:
 line comment <number>:
     user.select_range(number, number)
     code.toggle_comment()
-line clear <number>:
+line wipe <number>:
     edit.jump_line(number)
     user.vscode("editor.action.deleteLines")
-line clear:
+line wipe:
     user.vscode("editor.action.deleteLines")
 line copy <number>:
     user.select_range(number, number)
@@ -297,19 +303,20 @@ line comment <user.text> [over]:
 
 
 # find and replace
-find: user.find("")
-find <user.text>: user.find(text)
+find this: key(ctrl-f)
+find <user.text>: user.find(text or "")
 find all: user.find_everywhere("")
 find all <user.text>: user.find_everywhere(text)
 find case : user.find_toggle_match_by_case()
 find word : user.find_toggle_match_by_word()
 find expression : user.find_toggle_match_by_regex()
-find next: actions.user.vscode("editor.action.nextMatchFindAction")
-find previous: actions.user.vscode("editor.action.previousMatchFindAction")
-replace this [<user.text>]: user.replace(text or "")
+find next: user.vscode("editor.action.nextMatchFindAction")
+find previous: user.vscode("editor.action.previousMatchFindAction")
+replace this: edit.replace()
+replace [<user.text>]$: user.replace(text or "")
 replace all: user.replace_everywhere("")
 replace <user.text> all: user.replace_everywhere(text)
-replace confirm that: user.replace_confirm()
+replace confirm: user.replace_confirm()
 replace confirm all: user.replace_confirm_all()
 
 #quick replace commands, modeled after jetbrains
