@@ -31,15 +31,6 @@ class CodeActions:
         actions.user.vscode("editor.action.commentLine")
 
 
-@ctx.action_class("edit")
-class EditActions:
-    # talon edit actions
-    def jump_line(n: int):
-        actions.user.vscode("workbench.action.gotoLine")
-        actions.insert(str(n))
-        actions.key("enter")
-
-
 @ctx.action_class("win")
 class WinActions:
     def filename():
@@ -61,6 +52,12 @@ class WinActions:
 
 @mod.action_class
 class Actions:
+    def jump_line(n: int):
+        """Go to a specific line in file"""
+        actions.user.vscode("workbench.action.gotoLine")
+        actions.insert(str(n))
+        actions.key("enter")
+
     def vscode_terminal(number: int):
         """Activate a terminal by number"""
         actions.user.vscode(f"workbench.action.terminal.focusAtIndex{number}")
@@ -71,11 +68,11 @@ class Actions:
 
     def select_range(line_start: int, line_end: int):
         """Selects lines from line_start to line line_end"""
-        actions.edit.jump_line(line_start)
+        actions.user.jump_line(line_start)
 
         number_of_lines = line_end - line_start + 1
         for i in range(0, number_of_lines):
-            actions.edit.extend_line_down()
+            actions.key("shift-down")
 
     # snippet.py support begin
     def snippet_insert(text: str):
@@ -91,12 +88,6 @@ class Actions:
     # snippet.py support end
 
     # find_and_replace.py support begin
-
-    def find(text: str = None):
-        """Triggers find in current editor"""
-        actions.key("ctrl-f")
-        if text is not None:
-            actions.insert(text)
 
     def find_everywhere(text: str):
         """Triggers find across project"""

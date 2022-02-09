@@ -1,5 +1,10 @@
 # keyboard keys = low level
-go <user.arrow_keys>: key(arrow_keys)
+<user.arrow_keys>: key(arrow_keys)
+bottom:key("ctrl-end")
+shif bottom:key("shift-ctrl-end")
+top:key("ctrl-home")
+shif top:key("shift-ctrl-home")
+
 <user.letter>: key(letter)
 (ship | uppercase) <user.letters> [(lowercase | sunk)]:
     user.insert_formatted(letters, "ALL_CAPS")
@@ -10,18 +15,40 @@ go <user.arrow_keys>: key(arrow_keys)
 press <user.modifiers>: key(modifiers)
 
 # universal shortcuts
-zoom in: edit.zoom_in()
-zoom out: edit.zoom_out()
-zoom reset: edit.zoom_reset()
-scroll up: edit.page_up()
-scroll down: edit.page_down()
-copy: edit.copy()
-cut: edit.cut()
-paste: edit.paste()
-undo: edit.undo()
-redo: edit.redo()
+zoom in: key(ctrl-+)
+zoom out: key(ctrl--)
+zoom reset: key(ctrl-0)
+copy: key(ctrl-c)
+copy all: key(ctrl-a ctrl-c)
+cut: key(ctrl-x)
+cut all: key(ctrl-a ctrl-x)
+paste: key(ctrl-v)
+wipe up: key(shift-up delete)
+wipe down: key(shift-down delete)
+wipe all: key(ctrl-a delete)
+undo: key(ctrl-z)
+redo: key(ctrl-y)
 paste match: edit.paste_match_style()
-[file] save: edit.save()
+[file] save: key(ctrl-s)
+find$: key(ctrl-f)
+find <user.text>$:
+    key(ctrl-f)
+    sleep(.15)
+    insert(text)
+line wipe: key(home shift-down delete)
+line copy: key(home shift-down ctrl-c)
+line cut: key(home shift-down ctrl-x)
+word select: key(right ctrl-left shift-ctrl-right)
+word copy: key(right ctrl-left shift-ctrl-right ctrl-c)
+word cut: key(right ctrl-left shift-ctrl-right ctrl-x)
+word left: key(ctrl-left)
+word right: key(ctrl-right)
+shif word left: key(shift-ctrl-left)
+shif word right: key(shift-ctrl-right)
+word wipe: key(ctrl-backspace)
+word race: key(ctrl-delete)
+word wipe race: key(ctrl-backspace ctrl-delete)
+
 
 # repeat commands
 <user.ordinals>: core.repeat_command(ordinals-1)
@@ -115,3 +142,6 @@ timestamp insert UTC high resolution:
 #(http | htp): "http"
 #M D five: "md5"
 #word (regex | rejex): "regex"
+
+talon fast: user.make_fast()
+talon slow: user.make_slow()

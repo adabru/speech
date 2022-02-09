@@ -3,15 +3,15 @@ from typing import Set
 from talon import Module, Context, actions, app
 import sys
 
-default_alphabet = "air bat cap dream each fine gust harp sit jury ka look made near odd pit cu red sun trap urge vest when plex yank zip".split(
+default_alphabet = "air be cap dream he flop gust harp sit jury ka look made near odd pit cu red sun trap urge vest when plex yank zip".split(
     " "
 )
 letters_string = "abcdefghijklmnopqrstuvwxyz"
 
 default_digits = "zero one two three four five six seven eight nine".split(" ")
 numbers = [str(i) for i in range(10)]
-default_f_digits = "one two three four five six seven eight nine ten eleven twelve".split(
-    " "
+default_f_digits = (
+    "one two three four five six seven eight nine ten eleven twelve".split(" ")
 )
 
 mod = Module()
@@ -150,7 +150,6 @@ punctuation_words = {
     "at sign": "@",
     "and sign": "&",
     "ampersand": "&",
-
     # Currencies
     "dollar sign": "$",
     "pound sign": "£",
@@ -199,7 +198,6 @@ symbol_key_words = {
     "pipe": "|",
     "dubquote": '"',
     "double quote": '"',
-
     # Currencies
     "dollar": "$",
     "pound": "£",

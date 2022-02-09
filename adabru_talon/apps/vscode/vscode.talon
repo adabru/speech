@@ -65,9 +65,11 @@ file rename:
 file move:
     user.vscode("fileutils.moveFile")
     sleep(150ms)
-file open folder: user.vscode("revealFileInOS")
+file folder open: user.vscode("revealFileInOS")
+file folder create: user.vscode("explorer.newFolder")
 file reveal: user.vscode("workbench.files.action.showActiveFileInExplorer")
 file save ugly: user.vscode("workbench.action.files.saveWithoutFormatting")
+file format: user.vscode("editor.action.formatDocument")
 
 # Language Features
 suggest show: user.vscode("editor.action.triggerSuggest")
@@ -77,7 +79,6 @@ definition peek: user.vscode("editor.action.peekDefinition")
 definition side: user.vscode("editor.action.revealDefinitionAside")
 references show: user.vscode("editor.action.goToReferences")
 references find: user.vscode("references-view.find")
-format that: user.vscode("editor.action.formatDocument")
 format selection: user.vscode("editor.action.formatSelection")
 imports fix: user.vscode("editor.action.organizeImports")
 problem next: user.vscode("editor.action.marker.nextInFiles")
@@ -158,6 +159,7 @@ step over: user.vscode("workbench.action.debug.stepOver")
 debug step into: user.vscode("workbench.action.debug.stepInto")
 debug step out [of]: user.vscode("workbench.action.debug.stepOut")
 debug start: user.vscode("workbench.action.debug.start")
+debug run: user.vscode("workbench.action.debug.run")
 debug pause: user.vscode("workbench.action.debug.pause")
 debug stopper: user.vscode("workbench.action.debug.stop")
 debug continue: user.vscode("workbench.action.debug.continue")
@@ -240,16 +242,16 @@ block comment <number> through <number>:
     code.toggle_comment()
 block wipe <number> through <number>:
     user.select_range(number_1, number_2)
-    edit.delete()
+    key(delete)
 block copy <number> through <number>:
     user.select_range(number_1, number_2)
-    edit.copy()
+    key(ctrl-c)
 block cut <number> through <number>:
     user.select_range(number_1, number_2)
-    edit.cut()
+    key(ctrl-x)
 block replace <number> through <number>:
     user.select_range(number_1, number_2)
-    edit.paste()
+    key(ctrl-v)
 block <number> through <number>: user.select_range(number_1, number_2)
 block indent <number> through <number>:
     user.select_range(number_1, number_2)
@@ -265,33 +267,33 @@ block clone <number> through <number>:
 # line commands
 line copy down: user.vscode("editor.action.copyLinesDownAction")
 line copy up: user.vscode("editor.action.copyLinesUpAction")
-line <number>: edit.jump_line(number)
+line <number>: user.jump_line(number)
 line <number> end:
-    edit.jump_line(number)
-    edit.line_end()
+    user.jump_line(number)
+    key(end)
 line comment <number>:
     user.select_range(number, number)
     code.toggle_comment()
 line wipe <number>:
-    edit.jump_line(number)
+    user.jump_line(number)
     user.vscode("editor.action.deleteLines")
 line wipe:
     user.vscode("editor.action.deleteLines")
 line copy <number>:
     user.select_range(number, number)
-    edit.copy()
+    key(ctrl-c)
 line cut <number>:
     user.select_range(number, number)
-    edit.cut()
+    key(ctrl-x)
 line select <number>: user.select_range(number, number)
 line clone: user.vscode("editor.action.copyLinesDownAction")
 line indent: user.vscode("editor.action.indentLines")
 line indent <number>:
-    edit.jump_line(number)
+    user.jump_line(number)
     user.vscode("editor.action.indentLines")
 line outdent: user.vscode("editor.action.outdentLines")
 line outdent <number>:
-    edit.jump_line(number)
+    user.jump_line(number)
     user.vscode("editor.action.outdentLines")
 line down: user.vscode("editor.action.moveLinesDownAction")
 line up: user.vscode("editor.action.moveLinesUpAction")
@@ -304,15 +306,14 @@ line comment <user.text> [over]:
 
 # find and replace
 find this: key(ctrl-f)
-find <user.text>: user.find(text or "")
 find all: user.find_everywhere("")
 find all <user.text>: user.find_everywhere(text)
 find case : user.find_toggle_match_by_case()
 find word : user.find_toggle_match_by_word()
-find expression : user.find_toggle_match_by_regex()
+find regex : user.find_toggle_match_by_regex()
 find next: user.vscode("editor.action.nextMatchFindAction")
 find previous: user.vscode("editor.action.previousMatchFindAction")
-replace this: edit.replace()
+replace this: key(ctrl-h)
 replace [<user.text>]$: user.replace(text or "")
 replace all: user.replace_everywhere("")
 replace <user.text> all: user.replace_everywhere(text)
@@ -323,18 +324,18 @@ replace confirm all: user.replace_confirm_all()
 clear last <user.text> [over]:
     user.select_previous_occurrence(text)
     sleep(100ms)
-    edit.delete()
+    key(delete)
 clear next <user.text> [over]:
     user.select_next_occurrence(text)
     sleep(100ms)
-    edit.delete()
+    key(delete)
 clear last clip:
     user.select_previous_occurrence(clip.text())
-    edit.delete()
+    key(delete)
 clear next clip:
     user.select_next_occurrence(clip.text())
     sleep(100ms)
-    edit.delete()
+    key(delete)
 comment last <user.text> [over]:
     user.select_previous_occurrence(text)
     sleep(100ms)
@@ -354,35 +355,35 @@ comment next clip:
 go last <user.text> [over]:
     user.select_previous_occurrence(text)
     sleep(100ms)
-    edit.right()
+    key(right)
 go last clip:
     user.select_previous_occurrence(clip.text())
     sleep(100ms)
-    edit.right()
+    key(right)
 go next <user.text> [over]:
     user.select_next_occurrence(text)
-    edit.right()
+    key(right)
 go next clip:
     user.select_next_occurrence(clip.text())
-    edit.right()
+    key(right)
 paste last <user.text> [over]:
     user.select_previous_occurrence(text)
     sleep(100ms)
-    edit.right()
-    edit.paste()
+    key(right)
+    key(ctrl-v)
 paste next <user.text> [over]:
     user.select_next_occurrence(text)
     sleep(100ms)
-    edit.right()
-    edit.paste()
+    key(right)
+    key(ctrl-v)
 replace last <user.text> [over]:
     user.select_previous_occurrence(text)
     sleep(100ms)
-    edit.paste()
+    key(ctrl-v)
 replace next <user.text> [over]:
     user.select_next_occurrence(text)
     sleep(100ms)
-    edit.paste()
+    key(ctrl-v)
 select last <user.text> [over]: user.select_previous_occurrence(text)
 select next <user.text> [over]: user.select_next_occurrence(text)
 select last clip: user.select_previous_occurrence(clip.text())
@@ -392,6 +393,7 @@ select next clip: user.select_next_occurrence(clip.text())
 tab left: user.vscode("workbench.action.previousEditor")
 tab right: user.vscode("workbench.action.nextEditor")
 tab close: user.vscode("workbench.action.closeActiveEditor")
+tab close all: user.vscode("workbench.action.closeAllEditors")
 tab (reopen|restore): user.vscode("workbench.action.reopenClosedEditor")
 tab one: user.vscode("workbench.action.openEditorAtIndex1")
 tab two: user.vscode("workbench.action.openEditorAtIndex2")

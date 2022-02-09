@@ -8,10 +8,12 @@ ctx = Context()
 key = actions.key
 edit = actions.edit
 
-words_to_keep_lowercase = "a an the at by for in is of on to up and as but or nor".split()
+words_to_keep_lowercase = (
+    "a an the at by for in is of on to up and as but or nor".split()
+)
 
-DEFAULT_SEPARATOR = ' '
-SMASH_SEPARATOR = ''
+DEFAULT_SEPARATOR = " "
+SMASH_SEPARATOR = ""
 
 # SEP and NOSEP are used when defining formatters to determine whether the formatter should put a separator between words.
 SEP = True
@@ -48,7 +50,8 @@ def format_phrase(m: Union[str, Phrase], formatters: str):
         words = actions.user.replace_phrases(words)
 
     result = last_phrase_formatted = format_phrase_without_adding_to_history(
-        words, formatters)
+        words, formatters
+    )
     actions.user.add_phrase_to_history(result)
     # Arguably, we shouldn't be dealing with history here, but somewhere later
     # down the line. But we have a bunch of code that relies on doing it this
@@ -89,7 +92,9 @@ def first_vs_rest(first_func, rest_func=lambda w: w):
     through unchanged.
     """
     if first_func is None:
-        def first_func(w): return w
+
+        def first_func(w):
+            return w
 
     def formatter_function(i, word, _):
         return first_func(word) if i == 0 else rest_func(word)
@@ -265,7 +270,8 @@ class Actions:
         formatters_help_demo = {}
         for name in sorted(set(formatters_words.keys())):
             formatters_help_demo[name] = format_phrase_without_adding_to_history(
-                ['one', 'two', 'three'], name)
+                ["one", "two", "three"], name
+            )
         return formatters_help_demo
 
     def reformat_text(text: str, formatters: str) -> str:
@@ -285,13 +291,16 @@ def unformat_text(text: str) -> str:
     # Split on camelCase, including numbers
     # FIXME: handle non-ASCII letters!
     unformatted = re.sub(
-        r"(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|(?<=[a-zA-Z])(?=[0-9])|(?<=[0-9])(?=[a-zA-Z])", " ", unformatted)
+        r"(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|(?<=[a-zA-Z])(?=[0-9])|(?<=[0-9])(?=[a-zA-Z])",
+        " ",
+        unformatted,
+    )
     # TODO: Separate out studleycase vars
     return unformatted.lower()
 
 
 ctx.lists["self.formatters"] = formatters_words.keys()
 ctx.lists["self.prose_formatter"] = {
-    "tex": "NOOP",
+    "say": "NOOP",
     "sentence": "CAPITALIZE_FIRST_WORD",
 }
