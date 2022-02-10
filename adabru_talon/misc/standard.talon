@@ -4,6 +4,10 @@ bottom:key("ctrl-end")
 shif bottom:key("shift-ctrl-end")
 top:key("ctrl-home")
 shif top:key("shift-ctrl-home")
+shome: key("shift-home")
+shend: key("shift-end")
+shown: key("shift-down")
+shup: key("shift-up")
 
 <user.letter>: key(letter)
 (ship | uppercase) <user.letters> [(lowercase | sunk)]:
@@ -74,8 +78,10 @@ snap <user.running_applications> [screen] <number>:
     user.move_app_to_screen(running_applications, number)
 
 # virtual desktops
-desk next: key(ctrl-alt-right)
+desk right: key(ctrl-alt-right)
+desk move right: key(ctrl-alt-end)
 desk left: key(ctrl-alt-left)
+desk move left: key(ctrl-alt-home)
 
 # media keys
 volume up: user.system_command("pactl set-sink-volume 0 +10%")

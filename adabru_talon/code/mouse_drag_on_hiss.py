@@ -23,10 +23,11 @@ def still_running():
     if running:
         threshold_passed = True
         toggle_mouse_drag(True)
-        print('hiss duration passed threshold, starting gaze drag')
+        print("hiss duration passed threshold, starting gaze drag")
 
 
 def cursor_drag_on_hiss(is_active):
+    print("enol")
     global start
     global running
     global threshold_passed
@@ -39,14 +40,16 @@ def cursor_drag_on_hiss(is_active):
         if threshold_passed:
             threshold_passed = False
             toggle_mouse_drag(False)
-            print('end of hiss detected, disabling gaze drag')
+            print("end of hiss detected, disabling gaze drag")
 
 
-noise.register('hiss', cursor_drag_on_hiss)
+noise.register("hiss", cursor_drag_on_hiss)
 
 
 def toggle_mouse_drag(active: bool):
-    if setting_mouse_enable_hiss_drag.get() == 0 and active:  # allow turning off just not on
+    if (
+        setting_mouse_enable_hiss_drag.get() == 0 and active
+    ):  # allow turning off just not on
         return
 
     # if eye_zoom_mouse.zoom_mouse.enabled or eye_mouse.mouse.attached_tracker is None:

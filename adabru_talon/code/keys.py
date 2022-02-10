@@ -132,7 +132,7 @@ punctuation_words = {
     # Dragon. Possibly it has been fixed by later improvements to talon? -rntz
     "`": "`",
     ",": ",",  # <== these things
-    "back tick": "`",
+    "tick": "`",
     "grave": "`",
     "comma": ",",
     "period": ".",
@@ -219,8 +219,8 @@ simple_keys = [
     "end",
     "home",
     "insert",
-    "pagedown",
-    "pageup",
+    # "pagedown",
+    # "pageup",
     "space",
 ]
 
@@ -228,11 +228,11 @@ alternate_keys = {
     "wipe": "backspace",
     "out": "escape",
     "go": "enter",
-    "race": "delete",
-    "te": "tab",
+    "ace": "delete",
+    "ta": "tab",
     # 'junk': 'backspace',
-    "pup": "pageup",
-    "pown": "pagedown",
+    "pay up": "pageup",
+    "pay down": "pagedown",
     "menu key": "menu",
     "print screen": "printscr",
 }

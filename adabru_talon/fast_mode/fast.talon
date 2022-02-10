@@ -1,4 +1,4 @@
 tag: user.fast_mode
 -
 settings():
-    speech.timeout = .1
+    speech.timeout = .08

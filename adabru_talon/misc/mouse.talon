@@ -1,29 +1,21 @@
 curse yes: user.mouse_show_cursor()
 curse no: user.mouse_hide_cursor()
-
 control mouse: user.mouse_toggle_control_mouse()
 zoom mouse: user.mouse_toggle_zoom_mouse()
 camera overlay: user.mouse_toggle_camera_overlay()
 run calibration: user.mouse_calibrate()
-touch:
+leffy :
 	mouse_click(0)
     	# End any open drags
 	# Touch automatically ends left drags so this is for right drags specifically
 	user.mouse_drag_end()
+righty: mouse_click(1)
+middy: mouse_click(2)
 
-righty:
-	mouse_click(1)
-
-midclick:
-	mouse_click(2)
-
-#see keys.py for modifiers.
-#defaults
-#command
-#control
-#option = alt
-#shift
-#super = windows key
+sheffy:
+	key("shift:down")
+	mouse_click(0)
+	key("shift:up")
 <user.modifiers> touch:
 	key("{modifiers}:down")
 	mouse_click(0)
@@ -32,7 +24,7 @@ midclick:
 	key("{modifiers}:down")
 	mouse_click(1)
 	key("{modifiers}:up")
-(dubclick | duke):
+duke:
 	mouse_click()
 	mouse_click()
 (tripclick | triplick):
