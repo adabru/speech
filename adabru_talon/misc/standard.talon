@@ -1,22 +1,37 @@
 # keyboard keys = low level
 <user.arrow_keys>: key(arrow_keys)
+<user.function_key>: key(function_key)
+<user.special_key>: key(special_key)
+<user.modifiers> <user.unmodified_key>: key("{modifiers}-{unmodified_key}")
+press <user.modifiers>: key(modifiers)
+
+let <user.letter>+$: user.insert_many(letter_list)
+ship <user.letters>: user.insert_formatted(letters, "ALL_CAPS")
+sym <user.symbol_key>+$: user.insert_many(symbol_key_list)
+num <user.number_string>: "{number_string}"
+
+# repeat commands
+# <number_small>: core.repeat_command(number_small)
+ho: core.repeat_command(1)
+
 bottom:key("ctrl-end")
-shif bottom:key("shift-ctrl-end")
+shottom:key("shift-ctrl-end")
 top:key("ctrl-home")
-shif top:key("shift-ctrl-home")
+shop:key("shift-ctrl-home")
+sheft: key("shift-left")
+shight: key("shift-right")
 shome: key("shift-home")
 shend: key("shift-end")
 shown: key("shift-down")
 shup: key("shift-up")
 
-<user.letter>: key(letter)
-(ship | uppercase) <user.letters> [(lowercase | sunk)]:
-    user.insert_formatted(letters, "ALL_CAPS")
-<user.symbol_key>: key(symbol_key)
-<user.function_key>: key(function_key)
-<user.special_key>: key(special_key)
-<user.modifiers> <user.unmodified_key>: key("{modifiers}-{unmodified_key}")
-press <user.modifiers>: key(modifiers)
+# symbols (+XCompose)
+spamma: ", "
+arrow: "->"
+dub arrow: "=>"
+new line: "\\n"
+carriage return: "\\r"
+line feed: "\\r\\n"
 
 # universal shortcuts
 zoom in: key(ctrl-+)
@@ -27,9 +42,7 @@ copy all: key(ctrl-a ctrl-c)
 cut: key(ctrl-x)
 cut all: key(ctrl-a ctrl-x)
 paste: key(ctrl-v)
-wipe up: key(shift-up delete)
-wipe down: key(shift-down delete)
-wipe all: key(ctrl-a delete)
+ipe all: key(ctrl-a delete)
 undo: key(ctrl-z)
 redo: key(ctrl-y)
 paste match: edit.paste_match_style()
@@ -39,25 +52,11 @@ find <user.text>$:
     key(ctrl-f)
     sleep(.15)
     insert(text)
-line wipe: key(home shift-down delete)
-line copy: key(home shift-down ctrl-c)
+lipe: key(home shift-down delete)
+lopy: key(home shift-down ctrl-c)
 line cut: key(home shift-down ctrl-x)
-word select: key(right ctrl-left shift-ctrl-right)
-word copy: key(right ctrl-left shift-ctrl-right ctrl-c)
-word cut: key(right ctrl-left shift-ctrl-right ctrl-x)
-word left: key(ctrl-left)
-word right: key(ctrl-right)
-shif word left: key(shift-ctrl-left)
-shif word right: key(shift-ctrl-right)
-word wipe: key(ctrl-backspace)
-word race: key(ctrl-delete)
-word wipe race: key(ctrl-backspace ctrl-delete)
-
-
-# repeat commands
-<user.ordinals>: core.repeat_command(ordinals-1)
-<number_small> times: core.repeat_command(number_small-1)
-twice | again: core.repeat_command(1)
+con sheft: key(shift-ctrl-left)
+con shight: key(shift-ctrl-right)
 
 #  window management
 window (new|open): app.window_open()
@@ -96,7 +95,7 @@ media (play | pause): key(play)
 brightness up: user.system_command("brillo -A 10")
 brightness down: user.system_command("brillo -U 10")
 brightness <number>: user.system_command("brillo -S {number}")
-brightnessp dot <number>: user.system_command("brillo -S .{number}")
+brightness dot <number>: user.system_command("brillo -S .{number}")
 
 # macro
 macro record: user.macro_record()
@@ -143,7 +142,7 @@ timestamp insert UTC:
     insert(user.time_format_utc("%Y-%m-%d %H:%M:%S"))
 timestamp insert UTC high resolution:
     insert(user.time_format_utc("%Y-%m-%d %H:%M:%S.%f"))
-(abbreviate|abreviate|brief) {user.abbreviation}: "{abbreviation}"
+brief {user.abbreviation}: "{abbreviation}"
 #(jay son | jason ): "json"
 #(http | htp): "http"
 #M D five: "md5"

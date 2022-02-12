@@ -265,28 +265,28 @@ block clone <number> through <number>:
 
 
 # line commands
-line copy down: user.vscode("editor.action.copyLinesDownAction")
-line copy up: user.vscode("editor.action.copyLinesUpAction")
+lopy down: user.vscode("editor.action.copyLinesDownAction")
+lopy up: user.vscode("editor.action.copyLinesUpAction")
 line <number>: user.jump_line(number)
 line <number> end:
     user.jump_line(number)
     key(end)
-line comment <number>:
+lomment <number>:
     user.select_range(number, number)
     code.toggle_comment()
-line wipe <number>:
+lipe <number>:
     user.jump_line(number)
     user.vscode("editor.action.deleteLines")
-line wipe:
+lipe:
     user.vscode("editor.action.deleteLines")
-line copy <number>:
+lopy <number>:
     user.select_range(number, number)
     key(ctrl-c)
 line cut <number>:
     user.select_range(number, number)
     key(ctrl-x)
 line select <number>: user.select_range(number, number)
-line clone: user.vscode("editor.action.copyLinesDownAction")
+lone: user.vscode("editor.action.copyLinesDownAction")
 line indent: user.vscode("editor.action.indentLines")
 line indent <number>:
     user.jump_line(number)
@@ -295,9 +295,9 @@ line outdent: user.vscode("editor.action.outdentLines")
 line outdent <number>:
     user.jump_line(number)
     user.vscode("editor.action.outdentLines")
-line down: user.vscode("editor.action.moveLinesDownAction")
-line up: user.vscode("editor.action.moveLinesUpAction")
-line comment$: user.vscode("editor.action.commentLine")
+lown: user.vscode("editor.action.moveLinesDownAction")
+lup: user.vscode("editor.action.moveLinesUpAction")
+lomment$: user.vscode("editor.action.commentLine")
 line comment <user.text> [over]:
     user.vscode("editor.action.commentLine")
 	insert(user.text)
