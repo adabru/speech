@@ -200,7 +200,7 @@ ctx.lists["self.arrow_key"] = {
 }
 ctx.lists["self.special_key"] = {
     "end": "end",
-    "home": "home",
+    "start": "home",
     "insert": "insert",
     "space": "space",
     "ipe": "backspace",

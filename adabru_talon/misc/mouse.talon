@@ -24,10 +24,10 @@ sheffy:
 	key("{modifiers}:down")
 	mouse_click(1)
 	key("{modifiers}:up")
-duke:
+dubby:
 	mouse_click()
 	mouse_click()
-(tripclick | triplick):
+trippy:
 	mouse_click()
 	mouse_click()
 	mouse_click()
