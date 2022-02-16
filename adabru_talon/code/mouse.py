@@ -164,7 +164,7 @@ class Actions:
         ctrl.mouse_click(button=button, down=True)
 
     def mouse_drag_end():
-        """ Releases any held mouse buttons """
+        """Releases any held mouse buttons"""
         buttons_held_down = list(ctrl.mouse_buttons_down())
         for button in buttons_held_down:
             ctrl.mouse_click(button=button, up=True)
@@ -214,13 +214,11 @@ class Actions:
 
     def mouse_scroll_left(amount: float = 1):
         """Scrolls left"""
-        actions.mouse_scroll(
-            0, -amount * setting_mouse_wheel_horizontal_amount.get())
+        actions.mouse_scroll(0, -amount * setting_mouse_wheel_horizontal_amount.get())
 
     def mouse_scroll_right(amount: float = 1):
         """Scrolls right"""
-        actions.mouse_scroll(
-            0, amount * setting_mouse_wheel_horizontal_amount.get())
+        actions.mouse_scroll(0, amount * setting_mouse_wheel_horizontal_amount.get())
 
     def mouse_scroll_stop():
         """Stops scrolling"""
@@ -249,8 +247,7 @@ class Actions:
     def mouse_move_center_active_window():
         """move the mouse cursor to the center of the currently active window"""
         rect = ui.active_window().rect
-        ctrl.mouse_move(rect.left + (rect.width / 2),
-                        rect.top + (rect.height / 2))
+        ctrl.mouse_move(rect.left + (rect.width / 2), rect.top + (rect.height / 2))
 
 
 def show_cursor_helper(show):
@@ -311,15 +308,11 @@ def gaze_scroll():
         # the rect for the window containing the mouse
         rect = None
 
-        # on windows, check the active_window first since ui.windows() is not z-ordered
-        if app.platform == "windows" and ui.active_window().rect.contains(x, y):
-            rect = ui.active_window().rect
-        else:
-            windows = ui.windows()
-            for w in windows:
-                if w.rect.contains(x, y):
-                    rect = w.rect
-                    break
+        windows = ui.windows()
+        for w in windows:
+            if w.rect.contains(x, y):
+                rect = w.rect
+                break
 
         if rect is None:
             # print("no window found!")

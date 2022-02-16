@@ -18,7 +18,7 @@ go to {user.website}:
     sleep(50ms)
     insert(website)
     key(enter)
-go private: key(ctrl-shift-n)
+go cookie less: key(ctrl-shift-n)
 (refresh | reload) it: key(ctrl-r)
 (refresh | reload) it hard: key(ctrl-shift-rc)
 dev tools [show]: key(f12)

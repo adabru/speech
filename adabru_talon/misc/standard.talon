@@ -5,14 +5,16 @@
 <user.modifiers> <user.unmodified_key>: key("{modifiers}-{unmodified_key}")
 press <user.modifiers>: key(modifiers)
 
-let <user.letter>*$: user.insert_many(letter_list)
+let$: skip()
+let <user.letter>+$: user.insert_many(letter_list)
 ship <user.letters>: user.insert_formatted(letters, "ALL_CAPS")
+sym$: skip()
 sym <user.symbol_key>*$: user.insert_many(symbol_key_list)
 num <user.number_string>: "{number_string}"
 
 # repeat commands
-<number_string>: insert("")
-#core.repeat_command(number_small)
+# <user.number_string>: skip()
+<number>: core.repeat_command(number)
 ho: core.repeat_command(1)
 
 bottom:key("ctrl-end")
@@ -26,10 +28,8 @@ shend: key("shift-end")
 shown: key("shift-down")
 shup: key("shift-up")
 
-# symbols (+XCompose)
+# symbols
 spamma: ", "
-arrow: "->"
-dub arrow: "=>"
 new line: "\\n"
 carriage return: "\\r"
 line feed: "\\r\\n"

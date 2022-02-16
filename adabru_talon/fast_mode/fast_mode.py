@@ -11,10 +11,6 @@ from talon import (
     ctrl,
     cron,
 )
-from talon.skia import Shader, Color, Paint, Rect
-from talon.types.point import Point2d
-from talon_plugins import eye_mouse, eye_zoom_mouse
-from typing import Union
 
 mod = Module()
 mod.tag("fast_mode", desc="Shorten speech timeout")
@@ -31,3 +27,17 @@ class Actions:
     def make_slow():
         """Default speech timeout"""
         ctx.tags = []
+
+
+# from slack chat:
+#
+# from talon import Context, Module
+# mod = Module()
+# mod.mode("low_latency", help="low speech latency mode")
+
+# from talon import Context
+# ctx = Context()
+# ctx.matches = "mode: user.low_latency"
+# ctx.settings["speech.timeout"] = 0.120
+#
+# talon fast: mode.enable("user.low_latency")

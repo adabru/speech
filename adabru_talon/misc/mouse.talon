@@ -1,22 +1,17 @@
-curse yes: user.mouse_show_cursor()
-curse no: user.mouse_hide_cursor()
+# curse yes: user.mouse_show_cursor()
+# curse no: user.mouse_hide_cursor()
 control mouse: user.mouse_toggle_control_mouse()
 zoom mouse: user.mouse_toggle_zoom_mouse()
 camera overlay: user.mouse_toggle_camera_overlay()
 run calibration: user.mouse_calibrate()
-leffy :
-	mouse_click(0)
-    	# End any open drags
-	# Touch automatically ends left drags so this is for right drags specifically
-	user.mouse_drag_end()
+leffy : mouse_click(0)
 righty: mouse_click(1)
 middy: mouse_click(2)
-
 sheffy:
 	key("shift:down")
 	mouse_click(0)
 	key("shift:up")
-<user.modifiers> touch:
+<user.modifiers> leffy:
 	key("{modifiers}:down")
 	mouse_click(0)
 	key("{modifiers}:up")
@@ -33,10 +28,8 @@ trippy:
 	mouse_click()
 left drag | drag:
 	user.mouse_drag(0)
-right drag | righty drag:
-	user.mouse_drag(1)
-end drag | drag end:
-    user.mouse_drag_end()
+right drag | righty drag: user.mouse_drag(1)
+end drag | drag end: user.mouse_drag_end()
 wheel down: user.mouse_scroll_down()
 wheel down here:
     user.mouse_move_center_active_window()
