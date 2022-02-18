@@ -28,11 +28,14 @@ shend: key("shift-end")
 shown: key("shift-down")
 shup: key("shift-up")
 
-# symbols
+# shortened punctuation
 spamma: ", "
-new line: "\\n"
-carriage return: "\\r"
-line feed: "\\r\\n"
+spoint: ". "
+spest: "? "
+spang: "! "
+sym new line: "\\n"
+sym carriage return: "\\r"
+sym line feed: "\\r\\n"
 
 # universal shortcuts
 zoom in: key(ctrl-+)
@@ -82,6 +85,11 @@ desk right: key(ctrl-alt-right)
 desk move right: key(ctrl-alt-end)
 desk left: key(ctrl-alt-left)
 desk move left: key(ctrl-alt-home)
+
+screen rotate left: user.system_command("xrandr -o left")
+screen rotate right: user.system_command("xrandr -o right")
+screen rotate inverted: user.system_command("xrandr -o inverted")
+screen rotate normal: user.system_command("xrandr -o normal")
 
 # media keys
 volume up: user.system_command("pactl set-sink-volume 0 +10%")
@@ -151,3 +159,37 @@ brief {user.abbreviation}: "{abbreviation}"
 
 talon fast: user.make_fast()
 talon slow: user.make_slow()
+wheel pop: user.enable_wheel_pop()
+
+# dictation
+phrase <user.text>$: user.insert_formatted(text, "NOOP")
+phrase <user.text> over: user.insert_formatted(text, "NOOP")
+{user.prose_formatter} <user.prose>$: user.insert_formatted(prose, prose_formatter)
+{user.prose_formatter} <user.prose> over: user.insert_formatted(prose, prose_formatter)
+{user.prose_formatter}$: skip()
+<user.format_text>+$: user.insert_many(format_text_list)
+<user.format_text>+ over: user.insert_many(format_text_list)
+<user.formatters> that: user.formatters_reformat_selection(user.formatters)
+word <user.word>: user.insert_formatted(user.word, "NOOP")
+recent list: user.toggle_phrase_history()
+recent close: user.phrase_history_hide()
+recent repeat <number_small>: insert(user.get_recent_phrase(number_small))
+recent copy <number_small>: clip.set_text(user.get_recent_phrase(number_small))
+select that: user.select_last_phrase()
+before that: user.before_last_phrase()
+nope that | scratch that: user.clear_last_phrase()
+nope that was <user.formatters>: user.formatters_reformat_last(formatters)
+
+# allows you to prevent a command executing by ending it with "cancel"
+cancel$: skip()
+# the actual behavior of "cancel" is implemented in code/cancel.py; if you want to use a different phrase you must also change cancel_phrase there.
+
+# allows you to say something (eg to a human) that you don't want talon to hear, eg "ignore hey Jerry"
+ignore [<phrase>]$: app.notify("Command ignored")
+
+# web
+open {user.website}: user.open_url(website)
+{user.search_engine} hunt <user.text>$: user.search_with_search_engine(search_engine, user.text)
+{user.search_engine} (that|this):
+    text = edit.selected_text()
+    user.search_with_search_engine(search_engine, text)

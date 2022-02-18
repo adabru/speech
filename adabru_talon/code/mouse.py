@@ -23,31 +23,6 @@ gaze_job = None
 cancel_scroll_on_pop = True
 control_mouse_forced = False
 
-default_cursor = {
-    "AppStarting": r"%SystemRoot%\Cursors\aero_working.ani",
-    "Arrow": r"%SystemRoot%\Cursors\aero_arrow.cur",
-    "Hand": r"%SystemRoot%\Cursors\aero_link.cur",
-    "Help": r"%SystemRoot%\Cursors\aero_helpsel.cur",
-    "No": r"%SystemRoot%\Cursors\aero_unavail.cur",
-    "NWPen": r"%SystemRoot%\Cursors\aero_pen.cur",
-    "Person": r"%SystemRoot%\Cursors\aero_person.cur",
-    "Pin": r"%SystemRoot%\Cursors\aero_pin.cur",
-    "SizeAll": r"%SystemRoot%\Cursors\aero_move.cur",
-    "SizeNESW": r"%SystemRoot%\Cursors\aero_nesw.cur",
-    "SizeNS": r"%SystemRoot%\Cursors\aero_ns.cur",
-    "SizeNWSE": r"%SystemRoot%\Cursors\aero_nwse.cur",
-    "SizeWE": r"%SystemRoot%\Cursors\aero_ew.cur",
-    "UpArrow": r"%SystemRoot%\Cursors\aero_up.cur",
-    "Wait": r"%SystemRoot%\Cursors\aero_busy.ani",
-    "Crosshair": "",
-    "IBeam": "",
-}
-
-# todo figure out why notepad++ still shows the cursor sometimes.
-hidden_cursor = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), r"Resources\HiddenCursor.cur"
-)
-
 mod = Module()
 mod.list(
     "mouse_button", desc="List of mouse button words to mouse_click index parameter"
@@ -299,7 +274,6 @@ def start_scroll():
 
 
 def gaze_scroll():
-    # print("gaze_scroll")
     if (
         eye_zoom_mouse.zoom_mouse.state == eye_zoom_mouse.STATE_IDLE
     ):  # or eye_zoom_mouse.zoom_mouse.state == eye_zoom_mouse.STATE_SLEEP:
