@@ -10,6 +10,7 @@ from talon import (
     imgui,
     noise,
     ui,
+    registry,
 )
 from talon_plugins import eye_mouse, eye_zoom_mouse
 from talon_plugins.eye_mouse import config, toggle_camera_overlay, toggle_control
@@ -231,6 +232,8 @@ def show_cursor_helper(show):
 
 
 def on_pop(active):
+    if "user.wheel_pop" in registry.tags:
+        return
     if setting_mouse_enable_pop_stops_scroll.get() >= 1 and (gaze_job or scroll_job):
         stop_scroll()
     elif (
@@ -329,19 +332,3 @@ def start_cursor_scrolling():
     gaze_job = cron.interval("60ms", gaze_scroll)
     # if eye_zoom_mouse.zoom_mouse.enabled and eye_mouse.mouse.attached_tracker is not None:
     #    eye_zoom_mouse.zoom_mouse.sleep(True)
-
-
-if app.platform == "mac":
-    from talon import tap
-
-    def on_move(e):
-        if not config.control_mouse:
-            buttons = ctrl.mouse_buttons_down()
-            # print(str(ctrl.mouse_buttons_down()))
-            if not e.flags & tap.DRAG and buttons:
-                e.flags |= tap.DRAG
-                # buttons is a set now
-                e.button = list(buttons)[0]
-                e.modify()
-
-    tap.register(tap.MMOVE | tap.HOOK, on_move)
