@@ -19,8 +19,8 @@ go to {user.website}:
     insert(website)
     key(enter)
 go cookie less: key(ctrl-shift-n)
-(refresh | reload) it: key(ctrl-r)
-(refresh | reload) it hard: key(ctrl-shift-rc)
+(refresh | reload): key(ctrl-r)
+(refresh | reload) hard: key(ctrl-shift-rc)
 dev tools [show]: key(f12)
 
 tab (open | new): key(ctrl-t)

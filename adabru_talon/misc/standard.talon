@@ -33,6 +33,7 @@ spamma: ", "
 spoint: ". "
 spest: "? "
 spang: "! "
+spolon: ": "
 sym new line: "\\n"
 sym carriage return: "\\r"
 sym line feed: "\\r\\n"
@@ -63,14 +64,11 @@ con sheft: key(shift-ctrl-left)
 con shite: key(shift-ctrl-right)
 
 #  window management
-window (new|open): app.window_open()
-window next: app.window_next()
-window last: app.window_previous()
-window close: app.window_close()
+window close: key('alt-f4')
 fogy <user.running_applications>: user.switcher_focus(running_applications)
 running list: user.switcher_toggle_running()
 running close: user.switcher_hide_running()
-launch <user.launch_applications>: user.switcher_launch(launch_applications)
+# launch <user.launch_applications>: user.switcher_launch(launch_applications)
 snap <user.window_snap_position>: user.snap_window(window_snap_position)
 snap next [screen]: user.move_window_next_screen()
 snap last [screen]: user.move_window_previous_screen()
@@ -80,31 +78,38 @@ snap <user.running_applications> <user.window_snap_position>:
 snap <user.running_applications> [screen] <number>:
     user.move_app_to_screen(running_applications, number)
 
+launch web: user.systems_start("vivaldi-stable")
+launch term: user.systems_start("alacritty -e tmux")
+launch code: user.systems_start("code-insiders /home/adabru/.cache/vscode-default/default.code-workspace")
+launch steps: user.systems_start('sh -c "featherpad -w /home/adabru/👣/*"')
+launch mail: user.systems_start('thunderbird')
+launch$: user.systems_start("albert toggle")
+
 # virtual desktops
 desk right: key(ctrl-alt-right)
 desk move right: key(ctrl-alt-end)
 desk left: key(ctrl-alt-left)
 desk move left: key(ctrl-alt-home)
 
-screen rotate left: user.system_command("xrandr -o left")
-screen rotate right: user.system_command("xrandr -o right")
-screen rotate inverted: user.system_command("xrandr -o inverted")
-screen rotate normal: user.system_command("xrandr -o normal")
+screen rotate left: user.system_exec("xrandr -o left")
+screen rotate right: user.system_exec("xrandr -o right")
+screen rotate inverted: user.system_exec("xrandr -o inverted")
+screen rotate normal: user.system_exec("xrandr -o normal")
 
 # media keys
-volume up: user.system_command("pactl set-sink-volume 0 +10%")
-volume down: user.system_command("pactl set-sink-volume 0 -10%")
-volume <number>: user.system_command("pactl set-sink-volume 0 {number}%")
-volume mute: user.system_command("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+volume up: user.system_exec("pactl set-sink-volume 0 +10%")
+volume down: user.system_exec("pactl set-sink-volume 0 -10%")
+volume <number>: user.system_exec("pactl set-sink-volume 0 {number}%")
+volume mute: user.system_exec("pactl set-sink-mute @DEFAULT_SINK@ toggle")
 [media] play next: key(next)
 [media] play previous: key(prev)
 media (play | pause): key(play)
 
 # brightness
-brightness up: user.system_command("brillo -A 10")
-brightness down: user.system_command("brillo -U 10")
-brightness <number>: user.system_command("brillo -S {number}")
-brightness dot <number>: user.system_command("brillo -S .{number}")
+brightness up: user.system_exec("brillo -A 10")
+brightness down: user.system_exec("brillo -U 10")
+brightness <number>: user.system_exec("brillo -S {number}")
+brightness dot <number>: user.system_exec("brillo -S .{number}")
 
 # macro
 macro record: user.macro_record()
@@ -164,9 +169,13 @@ wheel pop: user.enable_wheel_pop()
 # dictation
 phrase <user.text>$: user.insert_formatted(text, "NOOP")
 phrase <user.text> over: user.insert_formatted(text, "NOOP")
-{user.prose_formatter} <user.prose>$: user.insert_formatted(prose, prose_formatter)
-{user.prose_formatter} <user.prose> over: user.insert_formatted(prose, prose_formatter)
-{user.prose_formatter}$: skip()
+say <user.prose>$: user.insert_formatted(prose, "NOOP")
+sauce <user.prose>$:
+    user.insert_formatted(prose, "NOOP")
+    " "
+say$: skip()
+stay <user.prose>$: user.insert_formatted(prose, "CAPITALIZE_FIRST_WORD")
+stay$: skip()
 <user.format_text>+$: user.insert_many(format_text_list)
 <user.format_text>+ over: user.insert_many(format_text_list)
 <user.formatters> that: user.formatters_reformat_selection(user.formatters)

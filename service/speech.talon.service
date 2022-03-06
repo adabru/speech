@@ -3,7 +3,8 @@ Description=talonvoice
 
 [Service]
 Type=simple
-ExecStart=/home/adabru/downloads/talon-linux/talon/run.sh
+# ExecStart=/home/adabru/downloads/talon-linux/talon/run.sh
+ExecStart=/home/adabru/downloads/talon-linux-109-0.2.0-357-g3b3e/talon/run.sh
 Restart=on-failure
 RestartSec=30s
 
