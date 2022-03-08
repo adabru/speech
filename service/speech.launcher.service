@@ -1,0 +1,11 @@
+[Unit]
+Description=app launching service
+
+[Service]
+Type=simple
+ExecStart=/home/adabru/repo/speech/run/launcher.py
+Restart=on-failure
+RestartSec=30s
+
+[Install]
+WantedBy=multi-user.target

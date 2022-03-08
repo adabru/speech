@@ -24,11 +24,13 @@ Not working good enough yet, pushing to later.
 #sudo cp ~/repo/speech/service/speech.speechwindow.service /etc/systemd/user/
 #sudo cp ~/repo/speech/service/speech.sphinx.service /etc/systemd/user/
 sudo cp ~/repo/speech/service/speech.talon.service /etc/systemd/user/
+sudo cp ~/repo/speech/service/speech.launcher.service /etc/systemd/user/
 
 #sudo systemctl enable --now speech.keys
 #systemctl --user start speech.speechwindow
 #systemctl --user enable --now speech.sphinx
 systemctl --user enable --now speech.talon
+systemctl --user enable --now speech.launcher
 
 # https://github.com/talonvoice/talon/issues/330
 # https://superuser.com/a/1270812/966225

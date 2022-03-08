@@ -19,8 +19,8 @@ ho: core.repeat_command(1)
 
 bottom:key("ctrl-end")
 shottom:key("shift-ctrl-end")
-top:key("ctrl-home")
-shop:key("shift-ctrl-home")
+tip:key("ctrl-home")
+ship:key("shift-ctrl-home")
 sheft: key("shift-left")
 shight: key("shift-right")
 shart: key("shift-home")
@@ -78,12 +78,12 @@ snap <user.running_applications> <user.window_snap_position>:
 snap <user.running_applications> [screen] <number>:
     user.move_app_to_screen(running_applications, number)
 
-launch web: user.systems_start("vivaldi-stable")
-launch term: user.systems_start("alacritty -e tmux")
-launch code: user.systems_start("code-insiders /home/adabru/.cache/vscode-default/default.code-workspace")
-launch steps: user.systems_start('sh -c "featherpad -w /home/adabru/👣/*"')
-launch mail: user.systems_start('thunderbird')
-launch$: user.systems_start("albert toggle")
+launch web: user.system_launch("vivaldi-stable")
+launch term: user.system_launch("alacritty -e tmux")
+launch code: user.system_launch("code-insiders /home/adabru/.cache/vscode-default/default.code-workspace")
+launch steps: user.system_launch('sh -c "featherpad -w /home/adabru/👣/*"')
+launch mail: user.system_launch('thunderbird')
+launch$: user.system_start("albert toggle")
 
 # virtual desktops
 desk right: key(ctrl-alt-right)

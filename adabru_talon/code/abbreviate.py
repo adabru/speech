@@ -182,6 +182,7 @@ abbreviations = {
     "specify": "spec",
     "standard in": "stdin",
     "standard out": "stdout",
+    "standard error": "stderr",
     "standard": "std",
     "string": "str",
     "structure": "struct",
