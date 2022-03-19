@@ -286,7 +286,7 @@ line cut <number>:
     user.select_range(number, number)
     key(ctrl-x)
 line select <number>: user.select_range(number, number)
-linone: user.vscode("editor.action.copyLinesDownAction")
+lone: user.vscode("editor.action.copyLinesDownAction")
 line indent: user.vscode("editor.action.indentLines")
 line indent <number>:
     user.jump_line(number)
@@ -295,7 +295,7 @@ line outdent: user.vscode("editor.action.outdentLines")
 line outdent <number>:
     user.jump_line(number)
     user.vscode("editor.action.outdentLines")
-lown: user.vscode("editor.action.moveLinesDownAction")
+lunder: user.vscode("editor.action.moveLinesDownAction")
 lup: user.vscode("editor.action.moveLinesUpAction")
 lomment$: user.vscode("editor.action.commentLine")
 line comment <user.text> [over]:

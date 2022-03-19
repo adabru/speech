@@ -3,9 +3,11 @@ Description=app launching service
 
 [Service]
 Type=simple
+Environment="DISPLAY=:1"
+Environment="XAUTHORITY=/home/adabru/.Xauthority"
 ExecStart=/home/adabru/repo/speech/run/launcher.py
 Restart=on-failure
 RestartSec=30s
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

@@ -39,32 +39,3 @@ class Actions:
     def system_launch(cmd: str):
         """execute a detached command on the system"""
         sock_launcher.try_send(f"x{cmd}")
-
-        # subprocess.Popen(
-        #     ["nohup", cmd],
-        #     shell=True,
-        #     preexec_fn=os.setpgrp,
-        #     # start_new_session=True,
-        #     stdin=subprocess.DEVNULL,
-        #     stdout=subprocess.DEVNULL,
-        #     stderr=subprocess.DEVNULL,
-        # )
-        # # https://stackoverflow.com/a/6011298/6040478
-        # try:
-        #     pid = os.fork()
-        #     if pid > 0:
-        #         return
-        # except OSError as e:
-        #     print("fork #1 failed: %d (%s)" % (e.errno, e.strerror))
-        #     sys.exit(1)
-        # os.setsid()
-        # try:
-        #     pid = os.fork()
-        #     if pid > 0:
-        #         sys.exit(0)
-        # except OSError as e:
-        #     print("fork #2 failed: %d (%s)" % (e.errno, e.strerror))
-        #     sys.exit(1)
-        # subprocess.run(cmd, shell=False, env=get_environment())
-        # # all done
-        # os._exit(os.EX_OK)

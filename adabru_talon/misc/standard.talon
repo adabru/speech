@@ -13,8 +13,8 @@ sym <user.symbol_key>*$: user.insert_many(symbol_key_list)
 num <user.number_string>: "{number_string}"
 
 # repeat commands
-# <user.number_string>: skip()
-<number>: core.repeat_command(number)
+# <number>: core.repeat_command(number)
+<user.single_digit>: core.repeat_command(single_digit)
 ho: core.repeat_command(1)
 
 bottom:key("ctrl-end")
@@ -25,7 +25,7 @@ sheft: key("shift-left")
 shight: key("shift-right")
 shart: key("shift-home")
 shend: key("shift-end")
-shown: key("shift-down")
+shunder: key("shift-down")
 shup: key("shift-up")
 
 # shortened punctuation
@@ -78,7 +78,9 @@ snap <user.running_applications> <user.window_snap_position>:
 snap <user.running_applications> [screen] <number>:
     user.move_app_to_screen(running_applications, number)
 
-launch web: user.system_launch("vivaldi-stable")
+
+# see https://forum.vivaldi.net/topic/30413/password-for-keyring-solved/20
+launch web: user.system_launch("vivaldi-stable --password-store=basic")
 launch term: user.system_launch("alacritty -e tmux")
 launch code: user.system_launch("code-insiders /home/adabru/.cache/vscode-default/default.code-workspace")
 launch steps: user.system_launch('sh -c "featherpad -w /home/adabru/👣/*"')
@@ -190,7 +192,7 @@ nope that | scratch that: user.clear_last_phrase()
 nope that was <user.formatters>: user.formatters_reformat_last(formatters)
 
 # allows you to prevent a command executing by ending it with "cancel"
-cancel$: skip()
+ignore$: skip()
 # the actual behavior of "cancel" is implemented in code/cancel.py; if you want to use a different phrase you must also change cancel_phrase there.
 
 # allows you to say something (eg to a human) that you don't want talon to hear, eg "ignore hey Jerry"
@@ -202,3 +204,7 @@ open {user.website}: user.open_url(website)
 {user.search_engine} (that|this):
     text = edit.selected_text()
     user.search_with_search_engine(search_engine, text)
+
+# system
+system force poweroff: user.system_exec("poweroff")
+system force suspend: user.system_exec("systemctl suspend")

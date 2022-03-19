@@ -188,3 +188,10 @@ def number_signed(m):
     "number_small", rule=f"({alt_digits} | {alt_teens} | {alt_tens} [{alt_digits}])"
 )
 def number_small(m): return int(parse_number(list(m)))
+
+repeat_numbers =  [digit for digit, n in digits_map.items() if n>1]
+@mod.capture(rule="("+"|".join(repeat_numbers)+")")
+def single_digit(m)->str:
+    """Parses a number phrase, returning it as an integer."""
+    return int(parse_number(list(m)))
+

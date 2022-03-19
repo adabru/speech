@@ -17,6 +17,7 @@ sock_launcher = UnixSocket("/tmp/launcher.sock", 100)
 sock_launcher.listen()
 
 while True:
+    logger.info(os.environ)
     logger.info("Wait for a connection")
     sock_launcher.accept()
     logger.info("Connected. Listening for commands ...")
@@ -30,8 +31,8 @@ while True:
                 command,
                 shell=True,
                 stdin=subprocess.DEVNULL,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
+                # stdout=subprocess.DEVNULL,
+                # stderr=subprocess.DEVNULL,
             )
 
     except RuntimeError as err:
