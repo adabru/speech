@@ -39,6 +39,7 @@ class Actions:
         """???"""
         global was_controlling
         ctx.tags = []
+        stop_scroll()
         toggle_control(was_controlling)
 
 

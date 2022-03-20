@@ -207,4 +207,5 @@ open {user.website}: user.open_url(website)
 
 # system
 system force poweroff: user.system_exec("poweroff")
+system force reboot: user.system_exec("reboot")
 system force suspend: user.system_exec("systemctl suspend")

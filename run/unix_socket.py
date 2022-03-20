@@ -1,6 +1,7 @@
 import os
 import socket
 
+
 class UnixSocket:
     reconnect = False
 
@@ -21,31 +22,31 @@ class UnixSocket:
             self.sock.close()
             self.reconnect = True
         except OSError as e:
-            if e.errno == 107: # Transport endpoint is not connected
+            if e.errno == 107:  # Transport endpoint is not connected
                 try:
                     self.sock.connect(self.path)
                     self.send(msg)
                 except FileNotFoundError:
-                    pass # server is not running
+                    pass  # server is not running
                 except ConnectionRefusedError:
-                    pass # socket exists, but server is not running
+                    pass  # socket exists, but server is not running
             else:
                 raise e
-        
 
     def close_connection(self):
         self.connection.close()
 
     def listen(self):
-        os.umask(~0o662)
+        mask = os.umask(~0o662)
         self.sock.bind(self.path)
         self.sock.listen(1)
+        os.umask(mask)
 
     def accept(self):
         self.connection, client_address = self.sock.accept()
 
     def send(self, msg):
-        packet = msg.encode().ljust(self.msg_length, b'\0')
+        packet = msg.encode().ljust(self.msg_length, b"\0")
         totalsent = 0
         while totalsent < self.msg_length:
             sent = self.sock.send(packet[totalsent:])
@@ -58,9 +59,9 @@ class UnixSocket:
         bytes_recd = 0
         while bytes_recd < self.msg_length:
             chunk = self.connection.recv(min(self.msg_length - bytes_recd, 2048))
-            if chunk == b'':
+            if chunk == b"":
                 raise RuntimeError("socket connection broken")
             chunks.append(chunk)
             bytes_recd = bytes_recd + len(chunk)
-        
-        return b''.join(chunks).strip(b'\0').decode()
+
+        return b"".join(chunks).strip(b"\0").decode()

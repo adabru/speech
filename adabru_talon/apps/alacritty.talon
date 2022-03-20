@@ -1,8 +1,12 @@
 app: alacritty
 -
 list: "ls\n"
+move: "mv "
+remove: "rm "
+remove recurse: "rm -r "
 paste: key(ctrl-shift-v)
 cancel: key(ctrl-c)
+clear: key(ctrl-l)
 quit: key(q)
 less: "less "
 change: "cd "
@@ -15,17 +19,20 @@ flag <user.letter>+$:
   "-"
   user.insert_many(letter_list)
 
+disk usage: "df -h\n"
 
-logscroll: "journalctl --user -u speech.talon -e\n"
-log: "journalctl --user -u speech.talon -ef\n"
-status: "systemctl --user status speech.talon.service\n"
-restart: "systemctl --user restart speech.talon.service"
+services reload: "systemctl --user daemon-reload\n"
 
-logscroll launcher: "journalctl --user -u speech.launcher -e\n"
-log launcher: "journalctl --user -u speech.launcher -ef\n"
-status launcher: "systemctl --user status speech.launcher.service\n"
-stop launcher: "systemctl --user stop speech.launcher.service\n"
-restart launcher: "systemctl --user restart speech.launcher.service\n"
+logscroll$: "journalctl --user -u speech.talon -e\n"
+log$: "journalctl --user -u speech.talon -ef\n"
+status$: "systemctl --user status speech.talon.service\n"
+restart$: "systemctl --user restart speech.talon.service"
+
+logscroll launcher$: "journalctl --user -u speech.launcher -e\n"
+log launcher$: "journalctl --user -u speech.launcher -ef\n"
+status launcher$: "systemctl --user status speech.launcher.service\n"
+stop launcher$: "systemctl --user stop speech.launcher.service\n"
+restart launcher$: "systemctl --user restart speech.launcher.service\n"
 
 git status: "git status\n"
 git diff: "git diff --ws-error-highlight=all\n"
