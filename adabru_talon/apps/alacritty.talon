@@ -1,7 +1,10 @@
 app: alacritty
 -
 list: "ls\n"
+list verbose: "ls -al\n"
 move: "mv "
+link: "ln -s "
+div: "diff "
 remove: "rm "
 remove recurse: "rm -r "
 paste: key(ctrl-shift-v)
@@ -14,6 +17,7 @@ change home: "cd ~\n"
 change downloads: "cd ~/downloads\n"
 change speech: "cd ~/repo/speech\n"
 change temp: "cd /tmp\n"
+change up: "cd ..\n"
 pe grep: "pgrep "
 flag <user.letter>+$:
   "-"

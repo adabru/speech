@@ -20,6 +20,8 @@ Not working good enough yet, pushing to later.
 # t -S python-pocketsphinx-git
 #pip install pocketsphinx
 
+ln -s ~/repo/speech/parrot_patterns.json ~/.talon/parrot/patterns.json
+
 #sudo cp ~/repo/speech/service/speech.keys.service /etc/systemd/system/
 #sudo cp ~/repo/speech/service/speech.speechwindow.service /etc/systemd/user/
 #sudo cp ~/repo/speech/service/speech.sphinx.service /etc/systemd/user/
