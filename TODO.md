@@ -69,8 +69,8 @@ https://stackoverflow.com/questions/11739675/why-am-i-missing-the-an4-1-1-match-
 - Problem:
   MODULE: DECODE Decoding using models previously trained
   Aligning results to find error rate
-  Can't open /home/slava/speech_commands/sphinx/own//result/own-1-2.match
-  Can't open /home/slava/speech_commands/sphinx/own//result/own-2-2.match
+  Can't open /home/adabru/repo/speech_commands/sphinx/own//result/own-1-2.match
+  Can't open /home/adabru/repo/speech_commands/sphinx/own//result/own-2-2.match
   word_align.pl failed with error code 65280 at /usr/lib/sphinxtrain/scripts/decode/slave.pl line 173.
 
   Nach der Einstellung "CFG_CD_TRAIN = True" in der sphinx_train.cfg, ist der Fehler sowohl bei der Kotextabh. als auch unabhängigen nicht wieder aufgetaucht:

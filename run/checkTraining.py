@@ -9,11 +9,12 @@ from scipy.io import wavfile
 
 import util
 
-folderPath = '/home/slava/speech_commands/sphinx/own'
-dictionaryDataFilePath = f'{folderPath}/etc//own.dic.sh'
-audioRecordingsFolder = f'{folderPath}/wav/train'
+folderPath = "/home/adabru/repo/speech_commands/sphinx/own"
+dictionaryDataFilePath = f"{folderPath}/etc//own.dic.sh"
+audioRecordingsFolder = f"{folderPath}/wav/train"
 
 dictionary = {}
+
 
 def findSegments(audioFilePath):
     rate, data = wavfile.read(audioFilePath)
@@ -35,29 +36,29 @@ def findSegments(audioFilePath):
             sil_length += 1
 
         # find next word
-        if in_word and sil_length > .2 * rate:
+        if in_word and sil_length > 0.2 * rate:
             in_word = False
-            segment['endFrame'] = f - int(.2 * rate)
-           
+            segment["endFrame"] = f - int(0.2 * rate)
 
     for segment in segments:
         # print(f"start: {segment['startFrame']/rate}s end: {segment['endFrame']/rate}s")
         # print(f"duration: {(segment['endFrame'] - segment['startFrame'])/rate}s end: {segment['endFrame']/rate}s")
-        segment['startTime'] = segment['startFrame']/rate
-        segment['endTime'] = segment['endFrame']/rate
+        segment["startTime"] = segment["startFrame"] / rate
+        segment["endTime"] = segment["endFrame"] / rate
 
     return segments
 
+
 def checkRecording(key, audioFilePath):
     config = {
-        'verbose': False,
-        'audio_file': audioFilePath,
-        'buffer_size': 2048,
-        'no_search': False,
-        'full_utt': False,
-        'hmm': os.path.join(folderPath, 'model_parameters/own.ci_cont'),
-        'lm': os.path.join(folderPath, 'etc/own.lm'),
-        'dic': os.path.join(folderPath, 'etc/own.dic')
+        "verbose": False,
+        "audio_file": audioFilePath,
+        "buffer_size": 2048,
+        "no_search": False,
+        "full_utt": False,
+        "hmm": os.path.join(folderPath, "model_parameters/own.ci_cont"),
+        "lm": os.path.join(folderPath, "etc/own.lm"),
+        "dic": os.path.join(folderPath, "etc/own.dic"),
     }
 
     speech = AudioFile(**config)
@@ -65,8 +66,8 @@ def checkRecording(key, audioFilePath):
     segments = []
     for phrase in speech:
         segments += phrase.seg()
-    segments = [s for s in segments if s.word not in ['<sil>', '<s>', '</s>']]
-    
+    segments = [s for s in segments if s.word not in ["<sil>", "<s>", "</s>"]]
+
     print(f"\n{key}")
     if all(s.word == key for s in segments):
         print("✓")
@@ -77,25 +78,34 @@ def checkRecording(key, audioFilePath):
     oracle = findSegments(audioFilePath)
 
     count = len(oracle)
-    expected_count = int(re.findall(r'\d+', audioFilePath)[-1])
+    expected_count = int(re.findall(r"\d+", audioFilePath)[-1])
     if count != expected_count:
-        print(f'WARNING: oracle found {count} segments, but file name says {expected_count}')
-    
+        print(
+            f"WARNING: oracle found {count} segments, but file name says {expected_count}"
+        )
+
     for i in range(count):
         tolerance = 0.15
-        if abs(segments[i].start_frame/100 - oracle[i]['startTime']) > tolerance or abs(segments[i].end_frame/100 - oracle[i]['endTime']) > tolerance:
-            print('WARNING: times differ, segment[%.3f, %.3f], oracle[%.3f, %.3f]' % (
-                segments[i].start_frame/100, 
-                segments[i].end_frame/100,
-                oracle[i]['startTime'], 
-                oracle[i]['endTime']))
+        if (
+            abs(segments[i].start_frame / 100 - oracle[i]["startTime"]) > tolerance
+            or abs(segments[i].end_frame / 100 - oracle[i]["endTime"]) > tolerance
+        ):
+            print(
+                "WARNING: times differ, segment[%.3f, %.3f], oracle[%.3f, %.3f]"
+                % (
+                    segments[i].start_frame / 100,
+                    segments[i].end_frame / 100,
+                    oracle[i]["startTime"],
+                    oracle[i]["endTime"],
+                )
+            )
             break
 
 
-with open(dictionaryDataFilePath, newline='') as dictionaryDataFile:
+with open(dictionaryDataFilePath, newline="") as dictionaryDataFile:
     Lines = dictionaryDataFile.readlines()
     for line in Lines:
-        if line[0] == '#':
+        if line[0] == "#":
             continue
 
         parts = line.strip().split()

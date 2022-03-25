@@ -3,7 +3,7 @@ Description=speech recognition and command execution
 
 [Service]
 Type=simple
-ExecStart=/home/slava/speech_commands/run/sphinx.py
+ExecStart=/home/adabru/repo/speech_commands/run/sphinx.py
 Restart=on-failure
 RestartSec=30s
 

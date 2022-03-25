@@ -45,3 +45,6 @@ git commit:
   "git commit -m \"\""
   key(left)
 git amend: "git commit --amend --no-edit"
+git set origin: "git remote set-url origin "
+git add origin: "git remote add origin "
+git push: "git push\n"

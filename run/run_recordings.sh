@@ -1,7 +1,7 @@
 #!/bin/bash
 
-recordFields="/home/slava/speech_commands/sphinx/own/etc/own_train.fileids"
-outputFolder="/home/slava/speech_commands/sphinx/own/wav/new"
+recordFields="/home/adabru/repo/speech_commands/sphinx/own/etc/own_train.fileids"
+outputFolder="/home/adabru/repo/speech_commands/sphinx/own/wav/new"
 
 printf '------ start recording\n'
 

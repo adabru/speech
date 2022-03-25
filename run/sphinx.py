@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
 # local
-from unix_socket import UnixSocket 
+from unix_socket import UnixSocket
 from logger import logger
 
-sock_keyboard = UnixSocket('/tmp/evdev_keypress.sock', 100)
-sock_gui = UnixSocket('/tmp/speech_gui.sock', 100)
+sock_keyboard = UnixSocket("/tmp/evdev_keypress.sock", 100)
+sock_gui = UnixSocket("/tmp/speech_gui.sock", 100)
 
 modifiers = set()
 hold_modifiers = False
@@ -22,9 +22,10 @@ def sendGuiState(key):
         "1" if "ctrl" in modifiers else "0",
         "1" if "alt" in modifiers else "0",
         "1" if "win" in modifiers else "0",
-        key
+        key,
     )
     sock_gui.try_send(msg)
+
 
 # keys and modifiers
 def sendKeyCode(keyboardCode):
@@ -40,10 +41,12 @@ def sendKeyCode(keyboardCode):
         releaseModifiers(False)
     sendGuiState(keyboardCode)
 
+
 def activateModifier(modifier):
     modifiers.add(modifier)
     logger.info(f"mods: {'+'.join(modifiers)}")
     sendGuiState(modifier)
+
 
 def holdModifiers():
     global hold_modifiers
@@ -51,19 +54,22 @@ def holdModifiers():
     logger.info(f"hold modifiers - mods: {'+'.join(modifiers)}")
     sendGuiState("hold")
 
-def releaseModifiers(send = True):
+
+def releaseModifiers(send=True):
     global hold_modifiers
     modifiers.clear()
     hold_modifiers = False
     if send:
         sendGuiState("release")
 
-# 
+
+#
 def pauseEngine():
     global pause_engine
     pause_engine = True
     logger.info("pause engine")
     sendGuiState("pause")
+
 
 def continueEngine():
     global pause_engine
@@ -71,25 +77,27 @@ def continueEngine():
     logger.info("continue engine")
     sendGuiState("continue")
 
-# 
-def noop(phone='noop'):
+
+#
+def noop(phone="noop"):
     ()
+
 
 def getPermissionFor(f, infoText):
     global confirm_function
     confirm_function = f
     sendGuiState(infoText)
 
-    switchLm('confirmation')
+    switchLm("confirmation")
 
-# 
+
+#
 def poweroff():
     noop()
     # cmdCommand = "shutdown -h now"
     # process = subprocess.Popen(cmdCommand.split(), stdout=subprocess.PIPE)
 
 
-    
 keyCodes = {
     "A": "a",
     "B": "b",
@@ -117,7 +125,6 @@ keyCodes = {
     "X": "x",
     "Y": "y",
     "Z": "z",
-
     "ZERO": "0",
     "NULL": "0",
     "1": "1",
@@ -129,31 +136,27 @@ keyCodes = {
     "7": "7",
     "8": "8",
     "9": "9",
-
     "ROUND_LEFT": "(",
     "ROUND_RIGHT": ")",
     "TAG_LEFT": "<",
     "TAG_RIGHT": ">",
     "SQUARE_LEFT": "[",
     "SQUARE_RIGHT": "]",
-
-    "ESCAPE":                     "escape",
-    "UP":                         "up",
-    "DOWN":                       "down",
-    "LEFT":                       "left",
-    "RIGHT":                      "right",
-    "PAGE_UP":                    "pgup",
-    "PAGE_DOWN":                  "pgdown",
-    "START":                      "home",
-    "END":                        "end",
-
-    "SPACE":                      "space",
-    "ENTER":                      "enter",
-    "TAB":                        "tab",
-    "DELETE":                     "del",
-    "BACKSPACE":                 "backspace",
+    "ESCAPE": "escape",
+    "UP": "up",
+    "DOWN": "down",
+    "LEFT": "left",
+    "RIGHT": "right",
+    "PAGE_UP": "pgup",
+    "PAGE_DOWN": "pgdown",
+    "START": "home",
+    "END": "end",
+    "SPACE": "space",
+    "ENTER": "enter",
+    "TAB": "tab",
+    "DELETE": "del",
+    "BACKSPACE": "backspace",
     # "SAY <TEXT>":                Text("%(text)s",
-
     # "F ONE": "f1",
     # "F TWO": "f2",
     # "F THREE": "f3",
@@ -167,7 +170,6 @@ keyCodes = {
     # "F ELEVEN": "f11",
     # "F TWELVE": "f12",
     # "DEGREE": "°",
-
     "CARET": "^",
     "CURLY_LEFT": "{",
     "CURLY_RIGHT": "}",
@@ -184,7 +186,7 @@ keyCodes = {
     "COLON": "colon",
     "SEMICOLON": ";",
     "AT": "@",
-    "DOUBLE_QUOTE": "\"",
+    "DOUBLE_QUOTE": '"',
     "SINGLE_QUOTE": "'",
     "HASH": "hash",
     "DOLLAR": "$",
@@ -194,7 +196,6 @@ keyCodes = {
     "AMPERSAND": "&",
     "EQUAL": "=",
     "PLUS": "+",
-
     "COMPOSE": "menu",
 }
 
@@ -217,7 +218,7 @@ mapping["RELEASE"] = lambda: releaseModifiers()
 mapping["PAUSE"] = lambda: pauseEngine()
 mapping["CONTINUE"] = lambda: continueEngine()
 
-# 
+#
 mapping["POWEROFF"] = lambda: getPermissionFor(poweroff, "poweroff system? [Yes|No]")
 
 # noop
@@ -225,18 +226,18 @@ mapping["YES"] = lambda: noop()
 mapping["NO"] = lambda: noop()
 
 
-
 import os, sys
+
 # https://github.com/bambocher/pocketsphinx-python
 from pocketsphinx import LiveSpeech
 
 # modelName = 'cmusphinx-voxforge-de-5.2'
 # modelName = 'an4_sphere/an4'
-modelName = 'own'
+modelName = "own"
 # modelName = 'confirmation'
-modelPath = f'/home/slava/speech_commands/sphinx/{modelName}'
+modelPath = f"/home/adabru/repo/speech_commands/sphinx/{modelName}"
 
-current_lm = 'own'
+current_lm = "own"
 
 global speech
 if len(sys.argv) > 1:
@@ -244,14 +245,14 @@ if len(sys.argv) > 1:
     from pocketsphinx import AudioFile
 
     config = {
-        'verbose': False,
-        'audio_file': sys.argv[1],
-        'buffer_size': 2048,
-        'no_search': False,
-        'full_utt': False,
-        'hmm': os.path.join(modelPath, f'model_parameters/{modelName}.ci_cont'),
-        'lm': os.path.join(modelPath, f'etc/{modelName}.lm'),
-        'dic': os.path.join(modelPath, f'etc/{modelName}.dic')
+        "verbose": False,
+        "audio_file": sys.argv[1],
+        "buffer_size": 2048,
+        "no_search": False,
+        "full_utt": False,
+        "hmm": os.path.join(modelPath, f"model_parameters/{modelName}.ci_cont"),
+        "lm": os.path.join(modelPath, f"etc/{modelName}.lm"),
+        "dic": os.path.join(modelPath, f"etc/{modelName}.dic"),
     }
 
     speech = AudioFile(**config)
@@ -266,26 +267,25 @@ def getSpeech(lm_name):
         buffer_size=2048,
         no_search=False,
         full_utt=False,
-
-        pip=1000.0, # Phone insertion penalty
-        wip=1000.0, # Word insertion penalty
-        nwpen=1000.0, # New word transition penalty
+        pip=1000.0,  # Phone insertion penalty
+        wip=1000.0,  # Word insertion penalty
+        nwpen=1000.0,  # New word transition penalty
         # pbeam=1e-10, # Beam width applied to phone transitions
         # fwdtree=False, # Run forward lexicon-tree search (1st pass)
         # fwdflat=False, # Run forward flat-lexicon search over word lattice (2nd pass)
-        
-        # logfn="/home/slava/speech_commands/sphinx/own/logdir/test.txt",
-        # senlogdir="/home/slava/speech_commands/sphinx/own/logdir",
+        # logfn="/home/adabru/repo/speech_commands/sphinx/own/logdir/test.txt",
+        # senlogdir="/home/adabru/repo/speech_commands/sphinx/own/logdir",
         # backtrace=True,
-
-        hmm=os.path.join(modelPath, f'model_parameters/{modelName}.ci_cont'),
-        lm=os.path.join(modelPath, f'etc/{lm_name}.lm'),
-        dic=os.path.join(modelPath, f'etc/{modelName}.dic'),
+        hmm=os.path.join(modelPath, f"model_parameters/{modelName}.ci_cont"),
+        lm=os.path.join(modelPath, f"etc/{lm_name}.lm"),
+        dic=os.path.join(modelPath, f"etc/{modelName}.dic"),
     )
+
 
 def switchLm(lm_name):
     global current_lm
     current_lm = lm_name
+
 
 def getSegment():
     while True:
@@ -300,11 +300,12 @@ def getSegment():
 
             for s in segments:
                 yield s
-            
+
             if last_lm != current_lm:
                 break
 
-logger.debug('entering loop')
+
+logger.debug("entering loop")
 for s in getSegment():
     if s.word == "<s>" or s.word == "</s>" or s.word == "<sil>":
         continue
@@ -314,11 +315,11 @@ for s in getSegment():
             if s.word == "YES":
                 confirm_function()
                 confirm_function = None
-                switchLm('keyboard')
+                switchLm("keyboard")
                 sendGuiState(s.word)
             elif s.word == "NO":
                 confirm_function = None
-                switchLm('keyboard')
+                switchLm("keyboard")
                 sendGuiState(s.word)
         # else:
-            # mapping[s.word]()
+        # mapping[s.word]()
