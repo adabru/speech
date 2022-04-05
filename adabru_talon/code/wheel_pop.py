@@ -4,13 +4,7 @@ from talon import (
     Module,
     Context,
     actions,
-    app,
-    canvas,
-    screen,
-    settings,
-    ui,
     noise,
-    ctrl,
     cron,
     registry,
 )
