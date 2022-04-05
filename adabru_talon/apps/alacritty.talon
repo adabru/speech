@@ -19,6 +19,8 @@ change speech: "cd ~/repo/speech\n"
 change temp: "cd /tmp\n"
 change up: "cd ..\n"
 pe grep: "pgrep "
+top: "top\n"
+cat: "cat "
 flag <user.letter>+$:
   "-"
   user.insert_many(letter_list)
@@ -48,3 +50,8 @@ git amend: "git commit --amend --no-edit"
 git set origin: "git remote set-url origin "
 git add origin: "git remote add origin "
 git push: "git push\n"
+
+pacman search: "pacman -Ss "
+pacman install: "pacman -S "
+
+in wheel: "imwheel -b 45\n"

@@ -7,14 +7,14 @@ press <user.modifiers>: key(modifiers)
 
 let$: skip()
 let <user.letter>+$: user.insert_many(letter_list)
-ship <user.letters>: user.insert_formatted(letters, "ALL_CAPS")
+step <user.letters>: user.insert_formatted(letters, "ALL_CAPS")
 sym$: skip()
 sym <user.symbol_key>*$: user.insert_many(symbol_key_list)
 num <user.number_string>: "{number_string}"
 
 # repeat commands
 # <number>: core.repeat_command(number)
-<user.single_digit>: core.repeat_command(single_digit)
+<user.single_digit> ho: core.repeat_command(single_digit)
 ho: core.repeat_command(1)
 
 bottom:key("ctrl-end")
@@ -209,3 +209,5 @@ open {user.website}: user.open_url(website)
 system force poweroff: user.system_exec("poweroff")
 system force reboot: user.system_exec("reboot")
 system force suspend: user.system_exec("systemctl suspend")
+
+chat ready: "I am ready\n"
