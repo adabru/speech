@@ -21,8 +21,14 @@ bottom:key("ctrl-end")
 shottom:key("shift-ctrl-end")
 tip:key("ctrl-home")
 ship:key("shift-ctrl-home")
+kace: key("ctrl-del")
+kipe: key("ctrl-backspace")
 sheft: key("shift-left")
-shight: key("shift-right")
+shite: key("shift-right")
+shkeft: key("ctrl-shift-left")
+shkite: key("ctrl-shift-right")
+keft: key("ctrl-left")
+kite: key("ctrl-right")
 shart: key("shift-home")
 shend: key("shift-end")
 shunder: key("shift-down")
@@ -60,8 +66,6 @@ find <user.text>$:
 lipe: key(home shift-down delete)
 lopy: key(home shift-down ctrl-c)
 line cut: key(home shift-down ctrl-x)
-con sheft: key(shift-ctrl-left)
-con shite: key(shift-ctrl-right)
 
 #  window management
 window close: key('alt-f4')
@@ -191,6 +195,10 @@ before that: user.before_last_phrase()
 nope that | scratch that: user.clear_last_phrase()
 nope that was <user.formatters>: user.formatters_reformat_last(formatters)
 
+dentence: user.german_sentence()
+dords: skip()
+doytation: skip()
+
 # allows you to prevent a command executing by ending it with "cancel"
 ignore$: skip()
 # the actual behavior of "cancel" is implemented in code/cancel.py; if you want to use a different phrase you must also change cancel_phrase there.
@@ -211,3 +219,5 @@ system force reboot: user.system_exec("reboot")
 system force suspend: user.system_exec("systemctl suspend")
 
 chat ready: "I am ready\n"
+chat yes: "Yes 👍\n"
+chat ok: "ok\n"

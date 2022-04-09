@@ -24,7 +24,7 @@ cat: "cat "
 flag <user.letter>+$:
   "-"
   user.insert_many(letter_list)
-
+copy: "copy "
 disk usage: "df -h\n"
 
 services reload: "systemctl --user daemon-reload\n"
@@ -55,3 +55,10 @@ pacman search: "pacman -Ss "
 pacman install: "pacman -S "
 
 in wheel: "imwheel -b 45\n"
+
+# tmux
+
+tew: key(alt-v)
+tose: key(alt-y)
+teft: key(alt-s)
+tight: key(alt-f)

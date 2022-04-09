@@ -75,11 +75,6 @@ def update_running_list():
     for cur_app in ui.apps(background=False):
         running_application_dict[cur_app.name] = True
 
-        if app.platform == "windows":
-            # print("hit....")
-            # print(cur_app.exe)
-            running_application_dict[cur_app.exe.split(os.path.sep)[-1]] = True
-
     running = actions.user.create_spoken_forms_from_list(
         [curr_app.name for curr_app in ui.apps(background=False)],
         words_to_exclude=words_to_exclude,
