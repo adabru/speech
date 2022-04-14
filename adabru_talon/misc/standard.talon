@@ -35,11 +35,12 @@ shunder: key("shift-down")
 shup: key("shift-up")
 
 # shortened punctuation
-spamma: ", "
-spoint: ". "
-spest: "? "
-spang: "! "
-spolon: ": "
+somma: ", "
+soint: ". "
+sest: "? "
+sang: "! "
+solon: ": "
+sequals: "= "
 sym new line: "\\n"
 sym carriage return: "\\r"
 sym line feed: "\\r\\n"
@@ -196,8 +197,10 @@ nope that | scratch that: user.clear_last_phrase()
 nope that was <user.formatters>: user.formatters_reformat_last(formatters)
 
 dentence: user.german_sentence()
-dords: skip()
-doytation: skip()
+dords: user.german_words()
+doytation: user.german_dictation()
+dictation up: user.german_dictionary_add()
+dictation low: user.german_dictionary_add()
 
 # allows you to prevent a command executing by ending it with "cancel"
 ignore$: skip()

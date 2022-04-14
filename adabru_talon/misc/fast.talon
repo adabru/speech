@@ -1,3 +1,4 @@
+language: en_US
 tag: user.fast_mode
 -
 settings():

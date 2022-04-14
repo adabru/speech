@@ -1,4 +1,6 @@
 language: de_DE
 -
-<user.german>: user.german_process(german)
-hallo: user.german_process("german")
+
+<phrase>: user.german_process(phrase)
+finish: user.deactivate_german()
+hückelhoven: skip()

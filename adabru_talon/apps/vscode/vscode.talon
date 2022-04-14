@@ -200,7 +200,7 @@ full screen: user.vscode("workbench.action.toggleFullScreen")
 
 curse undo: user.vscode("cursorUndo")
 
-select word: user.vscode("editor.action.addSelectionToNextFindMatch")
+sword: user.vscode("editor.action.addSelectionToNextFindMatch")
 skip word: user.vscode("editor.action.moveSelectionToNextFindMatch")
 
 # jupyter
@@ -298,7 +298,7 @@ line outdent <number>:
     user.vscode("editor.action.outdentLines")
 lunder: user.vscode("editor.action.moveLinesDownAction")
 lup: user.vscode("editor.action.moveLinesUpAction")
-lomment$: user.vscode("editor.action.commentLine")
+comment$: user.vscode("editor.action.commentLine")
 line comment <user.text> [over]:
     user.vscode("editor.action.commentLine")
 	insert(user.text)

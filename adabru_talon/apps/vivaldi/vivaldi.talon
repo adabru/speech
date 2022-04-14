@@ -23,7 +23,7 @@ go cookie less: key(ctrl-shift-n)
 (refresh | reload) hard: key(ctrl-shift-rc)
 dev tools [show]: key(f12)
 
-tab (open | new): key(ctrl-t)
+tew: key(ctrl-t)
 teft: key(alt-left)
 tight: key(alt-right)
 tose: key(ctrl-w )

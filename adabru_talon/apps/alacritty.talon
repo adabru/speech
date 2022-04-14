@@ -1,10 +1,12 @@
 app: alacritty
 -
 list: "ls\n"
-list verbose: "ls -al\n"
+list verbose: "ls -ahl\n"
 move: "mv "
 link: "ln -s "
+make dear: "mkdir "
 div: "diff "
+touch: "touch "
 remove: "rm "
 remove recurse: "rm -r "
 paste: key(ctrl-shift-v)
@@ -12,6 +14,9 @@ cancel: key(ctrl-c)
 clear: key(ctrl-l)
 quit: key(q)
 less: "less "
+pipe less: " | less\n"
+pipe grep$: " | grep "
+pipe grep <phrase>: " | grep {phrase}\n"
 change: "cd "
 change home: "cd ~\n"
 change downloads: "cd ~/downloads\n"
@@ -53,6 +58,13 @@ git push: "git push\n"
 
 pacman search: "pacman -Ss "
 pacman install: "pacman -S "
+update: "update\n"
+
+pip list: "pip list\n"
+pip install$: "pip install "
+pip install <phrase>: "pip install {phrase}\n"
+pip update$: "pip install -U "
+pip update <phrase>: "pip install -U {phrase}\n"
 
 in wheel: "imwheel -b 45\n"
 
