@@ -1,5 +1,5 @@
 URL,Spoken name
-https://www.amazon.com/,amazon
+https://www.amazon.de/,amazon
 https://maps.google.com/,google maps
 https://github.com/,github
 https://en.wikipedia.org/,wikipedia
@@ -14,3 +14,7 @@ https://github.com/talonvoice/talon/issues,talon issues
 https://talonvoice.slack.com,talon slack
 https://web.telegram.org/z,telegram
 https://www.facebook.com,facebook
+https://wego.here.com,map
+https://www.wg-gesucht.de,vege
+https://pypi.org/search/?q=,pipi
+https://github.com/cursorless-dev/cursorless/tree/main/docs/user,cursorless

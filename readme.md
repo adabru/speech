@@ -15,6 +15,8 @@ Not working good enough yet, pushing to later.
 #pacman -S ttf-dejavu
 #mkdir -p ~/.talon/user
 wget -o ~/.talon/user/dictionary/german.dic https://github.com/mqnc/talon_german/raw/master/dictionary/german.dic
+cd ~/.talon/user
+git clone https://github.com/cursorless-dev/cursorless-talon.git cursorless-talon
 
 #pacman -S python-pyqt5 python-scipy python-sounddevice python-wheel swig
 #t -S python-keyboard

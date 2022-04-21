@@ -20,7 +20,7 @@ go to {user.website}:
     key(enter)
 go cookie less: key(ctrl-shift-n)
 (refresh | reload): key(ctrl-r)
-(refresh | reload) hard: key(ctrl-shift-rc)
+(refresh | reload) hard: key(ctrl-shift-r)
 dev tools [show]: key(f12)
 
 tew: key(ctrl-t)

@@ -20,19 +20,24 @@ pipe grep <phrase>: " | grep {phrase}\n"
 change: "cd "
 change home: "cd ~\n"
 change downloads: "cd ~/downloads\n"
+change setup: "cd ~/setup\n"
 change speech: "cd ~/repo/speech\n"
 change temp: "cd /tmp\n"
+change talon: "cd ~/.talon/user\n"
+change mount: "cd /mnt\n"
 change up: "cd ..\n"
 pe grep: "pgrep "
 top: "top\n"
 cat: "cat "
+allow exec: "chmod +x "
 flag <user.letter>+$:
   "-"
   user.insert_many(letter_list)
 copy: "copy "
-disk usage: "df -h\n"
 
+disk usage: "df -h\n"
 services reload: "systemctl --user daemon-reload\n"
+generate password: "openssl rand -base64 16\n"
 
 logscroll$: "journalctl --user -u speech.talon -e\n"
 log$: "journalctl --user -u speech.talon -ef\n"
@@ -74,3 +79,9 @@ tew: key(alt-v)
 tose: key(alt-y)
 teft: key(alt-s)
 tight: key(alt-f)
+
+wifi list: "nmcli device wifi\n"
+wifi connect: "nmcli device wifi -a "
+
+unmount: "sudo umount /mnt\n"
+mount squash: "sudo mount -o loop /mnt"

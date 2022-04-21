@@ -167,7 +167,7 @@ symbol_key_words = {
     "dash": "-",
     "equals": "=",
     "tilde": "~",
-    "under score": "_",
+    "down score": "_",
     "paren": "(",
     "L paren": "(",
     "left paren": "(",

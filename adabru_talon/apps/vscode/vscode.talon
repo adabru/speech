@@ -56,8 +56,8 @@ file open [<user.text>]:
     insert(text or "")
     sleep(500ms)
     key(enter)
-file copy path: user.vscode("copyFilePath")
-file create sibling: user.vscode_and_wait("explorer.newFile")
+file path: user.vscode("copyFilePath")
+file sibling: user.vscode_and_wait("explorer.newFile")
 file create: user.vscode("workbench.action.files.newUntitledFile")
 file rename:
     user.vscode("fileutils.renameFile")

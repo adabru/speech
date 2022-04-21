@@ -117,6 +117,7 @@ brightness up: user.system_exec("brillo -A 10")
 brightness down: user.system_exec("brillo -U 10")
 brightness <number>: user.system_exec("brillo -S {number}")
 brightness dot <number>: user.system_exec("brillo -S .{number}")
+brightness max: user.system_exec("brillo -S 100")
 
 # macro
 macro record: user.macro_record()
@@ -224,3 +225,6 @@ system force suspend: user.system_exec("systemctl suspend")
 chat ready: "I am ready\n"
 chat yes: "Yes 👍\n"
 chat ok: "ok\n"
+
+start eye record: user.start_eye_record()
+stop eye record: user.end_eye_record()
