@@ -70,6 +70,7 @@ line cut: key(home shift-down ctrl-x)
 
 #  window management
 window close: key('alt-f4')
+full screen: key('f11')
 fogy <user.running_applications>: user.switcher_focus(running_applications)
 running list: user.switcher_toggle_running()
 running close: user.switcher_hide_running()
