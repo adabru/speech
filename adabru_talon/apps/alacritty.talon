@@ -81,7 +81,8 @@ teft: key(alt-s)
 tight: key(alt-f)
 
 wifi list: "nmcli device wifi\n"
-wifi connect: "nmcli device wifi -a "
+wifi connect: "nmcli device wifi connect -a "
+wifi connection: "nmcli connection show\n"
 
 unmount: "sudo umount /mnt\n"
 mount squash: "sudo mount -o loop /mnt"
