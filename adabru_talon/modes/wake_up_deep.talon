@@ -5,7 +5,7 @@ mode: all
     user.enable_deep_sleep()
     speech.disable()
     user.mouse_sleep()
-^wakeup wakeup wakeup$:
+^wakeup wakeup$:
     user.disable_deep_sleep()
     speech.enable()
     user.mouse_toggle_control_mouse()

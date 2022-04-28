@@ -18,6 +18,7 @@ bar run: user.vscode("workbench.view.debug")
 bar search: user.vscode("workbench.view.search")
 bar source: user.vscode("workbench.view.scm")
 bar switch: user.vscode("workbench.action.toggleSidebarVisibility")
+bar marks: user.vscode("workbench.view.extension.bookmarks")
 
 symbol find [<user.text>]:
     user.vscode("workbench.action.gotoSymbol")
@@ -105,10 +106,19 @@ go recent [<user.text>]:
     sleep(250ms)
 
 # Bookmarks. Requires Bookmarks plugin
-go marks: user.vscode("workbench.view.extension.bookmarks")
-toggle mark: user.vscode("bookmarks.toggle")
-go next mark: user.vscode("bookmarks.jumpToNext")
-go last mark: user.vscode("bookmarks.jumpToPrevious")
+mark <user.text>:
+    user.vscode("bookmarks.toggleLabeled")
+    sleep(10ms)
+    insert(text)
+    sleep(10ms)
+    key(enter)
+un mark: user.vscode("bookmarks.toggle")
+lookup <user.text>:
+    user.vscode("bookmarks.listFromAllFiles")
+    sleep(10ms)
+    insert(text)
+    sleep(10ms)
+    key(enter)
 
 # Folding
 fold that: user.vscode("editor.fold")
@@ -273,17 +283,21 @@ line <number> end:
     key(end)
 lomment <number>:
     user.select_range(number, number)
+    sleep(50ms)
     code.toggle_comment()
 lipe <number>:
     user.jump_line(number)
+    sleep(50ms)
     user.vscode("editor.action.deleteLines")
 lipe:
     user.vscode("editor.action.deleteLines")
 lopy <number>:
     user.select_range(number, number)
+    sleep(50ms)
     key(ctrl-c)
 line cut <number>:
     user.select_range(number, number)
+    sleep(50ms)
     key(ctrl-x)
 line select <number>: user.select_range(number, number)
 lone: user.vscode("editor.action.copyLinesDownAction")

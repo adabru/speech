@@ -15,7 +15,7 @@ num <user.number_string>: "{number_string}"
 # repeat commands
 # <number>: core.repeat_command(number)
 <user.single_digit> ho: core.repeat_command(single_digit)
-ho: core.repeat_command(1)
+hi: core.repeat_command(1)
 
 bottom:key("ctrl-end")
 shottom:key("shift-ctrl-end")

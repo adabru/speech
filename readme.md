@@ -24,6 +24,7 @@ git clone https://github.com/cursorless-dev/cursorless-talon.git cursorless-talo
 #pip install pocketsphinx
 
 ln -s ~/repo/speech/parrot_patterns.json ~/.talon/parrot/patterns.json
+ln -s ~/repo/speech/adabru_talon/cursorless-settings ~/.talon/user/
 
 #sudo cp ~/repo/speech/service/speech.keys.service /etc/systemd/system/
 #sudo cp ~/repo/speech/service/speech.speechwindow.service /etc/systemd/user/
