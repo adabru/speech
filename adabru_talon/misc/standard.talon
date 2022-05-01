@@ -14,7 +14,7 @@ num <user.number_string>: "{number_string}"
 
 # repeat commands
 # <number>: core.repeat_command(number)
-<user.single_digit> ho: core.repeat_command(single_digit)
+<user.single_digit> hi: core.repeat_command(single_digit)
 hi: core.repeat_command(1)
 
 bottom:key("ctrl-end")
@@ -71,10 +71,6 @@ line cut: key(home shift-down ctrl-x)
 #  window management
 window close: key('alt-f4')
 full screen: key('f11')
-fogy <user.running_applications>: user.switcher_focus(running_applications)
-running list: user.switcher_toggle_running()
-running close: user.switcher_hide_running()
-# launch <user.launch_applications>: user.switcher_launch(launch_applications)
 snap <user.window_snap_position>: user.snap_window(window_snap_position)
 snap next [screen]: user.move_window_next_screen()
 snap last [screen]: user.move_window_previous_screen()
@@ -87,11 +83,18 @@ snap <user.running_applications> [screen] <number>:
 
 # see https://forum.vivaldi.net/topic/30413/password-for-keyring-solved/20
 launch web: user.system_launch("vivaldi-stable --password-store=basic")
-launch term: user.system_launch("alacritty -e tmux")
+fogy web: user.focus_window("vivaldi-stable")
+launch term: user.system_launch("alacritty --class tmux -e tmux")
+fogy term: user.focus_window("tmux")
 launch code: user.system_launch("code-insiders /home/adabru/.cache/vscode-default/default.code-workspace")
+fogy code: user.focus_window("code-insiders")
 launch steps: user.system_launch('sh -c "featherpad -w /home/adabru/👣/*"')
+fogy steps: user.focus_window('featherpad')
+to dos: user.system_launch('sh -c "alacritty -t Todo --class todo -e vim ~/s"')
 launch mail: user.system_launch('thunderbird')
+fogy mail: user.focus_window('Thunderbird')
 launch$: user.system_start("albert toggle")
+fogy debug: user.print_debug()
 
 # virtual desktops
 desk right: key(ctrl-alt-right)
@@ -188,6 +191,9 @@ stay$: skip()
 <user.format_text>+$: user.insert_many(format_text_list)
 <user.format_text>+ over: user.insert_many(format_text_list)
 <user.formatters> that: user.formatters_reformat_selection(user.formatters)
+flag <user.letter>+$:
+  "-"
+  user.insert_many(letter_list)
 word <user.word>: user.insert_formatted(user.word, "NOOP")
 recent list: user.toggle_phrase_history()
 recent close: user.phrase_history_hide()

@@ -4,8 +4,7 @@ mode: user.python
 mode: user.auto_lang
 and code.language: python
 -
-loop: user.snippet_insert("f")
-if: user.snippet_insert("if")
+
 zero: "0"
 one: "1"
 two: "2"
@@ -16,15 +15,48 @@ six: "6"
 seven: "7"
 eight: "8"
 nine: "9"
+point: "."
 com: ","
 col: ":"
 dash: "-"
 minus: "-"
+downscore: "_"
 plus: "+"
+box: "["
+round: "("
+right round: ")"
+brace: "{"
+right brace: "}"
+greater: ">"
+less: "<"
+dote: "\""
+quote: "'"
+assign: "="
+equals: "=="
+not equals: "!="
+or: " or "
+also: " and "
+
+none: "None"
+false: "False"
+true: "True"
+self: "self"
+return: "return "
+import: "import "
+else: "else:\n"
+print:
+    "print()"
+    key(left)
 enumerate:
     "enumerate()"
     key(left)
-box: "["
-round: "("
-equals: "=="
-return: "return "
+len:
+    "len()"
+    key(left)
+
+loop: user.snippet_insert("f")
+while: user.snippet_insert("w")
+if: user.snippet_insert("if")
+function: user.snippet_insert("func")
+class: user.snippet_insert("c")
+constructor: user.snippet_insert("init")

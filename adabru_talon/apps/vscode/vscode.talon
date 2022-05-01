@@ -85,12 +85,10 @@ imports fix: user.vscode("editor.action.organizeImports")
 problem next: user.vscode("editor.action.marker.nextInFiles")
 problem last: user.vscode("editor.action.marker.prevInFiles")
 problem fix: user.vscode("problems.action.showQuickFixes")
-rename that: user.vscode("editor.action.rename")
-refactor that: user.vscode("editor.action.refactor")
+rename: user.vscode("editor.action.rename")
+refactor: user.vscode("editor.action.refactor")
 whitespace trim: user.vscode("editor.action.trimTrailingWhitespace")
 language switch: user.vscode("workbench.action.editor.changeLanguageMode")
-refactor rename: user.vscode("editor.action.rename")
-refactor this: user.vscode("editor.action.refactor")
 
 #code navigation
 (go declaration | follow): user.vscode("editor.action.revealDefinition")
@@ -108,16 +106,17 @@ go recent [<user.text>]:
 # Bookmarks. Requires Bookmarks plugin
 mark <user.text>:
     user.vscode("bookmarks.toggleLabeled")
-    sleep(10ms)
+    sleep(20ms)
     insert(text)
-    sleep(10ms)
+    sleep(20ms)
     key(enter)
 un mark: user.vscode("bookmarks.toggle")
+lookup$: user.vscode("bookmarks.listFromAllFiles")
 lookup <user.text>:
     user.vscode("bookmarks.listFromAllFiles")
-    sleep(10ms)
+    sleep(200ms)
     insert(text)
-    sleep(10ms)
+    sleep(20ms)
     key(enter)
 
 # Folding

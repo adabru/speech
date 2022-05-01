@@ -1,4 +1,5 @@
 app: alacritty
+not title: Todo
 -
 list: "ls\n"
 list verbose: "ls -ahl\n"
@@ -30,10 +31,8 @@ pe grep: "pgrep "
 top: "top\n"
 cat: "cat "
 allow exec: "chmod +x "
-flag <user.letter>+$:
-  "-"
-  user.insert_many(letter_list)
 copy: "copy "
+man <phrase>: "man {phrase}\n"
 
 disk usage: "df -h\n"
 services reload: "systemctl --user daemon-reload\n"
@@ -68,13 +67,14 @@ update: "update\n"
 pip list: "pip list\n"
 pip install$: "pip install "
 pip install <phrase>: "pip install {phrase}\n"
+pip uninstall$: "pip uninstall "
+pip uninstall <phrase>: "pip uninstall {phrase}\n"
 pip update$: "pip install -U "
 pip update <phrase>: "pip install -U {phrase}\n"
 
 in wheel: "imwheel -b 45\n"
 
 # tmux
-
 tew: key(alt-v)
 tose: key(alt-y)
 teft: key(alt-s)
@@ -86,3 +86,5 @@ wifi connection: "nmcli connection show\n"
 
 unmount: "sudo umount /mnt\n"
 mount squash: "sudo mount -o loop /mnt"
+
+sink: "sync.py\n"
