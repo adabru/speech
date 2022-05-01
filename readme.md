@@ -23,9 +23,7 @@ git clone https://github.com/cursorless-dev/cursorless-talon.git cursorless-talo
 # t -S python-pocketsphinx-git
 #pip install pocketsphinx
 
-# pip install xlib
-# ~/downloads/talon-linux-109-0.2.0-357-g3b3e/talon/resources/venv_bin/posix/pip install xlib
-~/downloads/talon-linux-109-0.2.0-357-g3b3e/talon/resources/venv_bin/posix/pip install git+https://github.com/python-xlib/python-xlib.git@0.30
+~/downloads/talon-linux-109-0.2.0-357-g3b3e/talon/resources/venv_bin/posix/pip install ewmh
 
 ln -s ~/repo/speech/parrot_patterns.json ~/.talon/parrot/patterns.json
 ln -s ~/repo/speech/adabru_talon/cursorless-settings ~/.talon/user/

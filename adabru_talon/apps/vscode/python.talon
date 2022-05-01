@@ -34,6 +34,7 @@ quote: "'"
 assign: "="
 equals: "=="
 not equals: "!="
+not: "not "
 or: " or "
 also: " and "
 
