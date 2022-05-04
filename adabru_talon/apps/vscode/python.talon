@@ -22,7 +22,10 @@ dash: "-"
 minus: "-"
 downscore: "_"
 plus: "+"
+star: "*"
+slash: "/"
 box: "["
+right box: "]"
 round: "("
 right round: ")"
 brace: "{"
@@ -42,6 +45,7 @@ none: "None"
 false: "False"
 true: "True"
 self: "self"
+int: "int"
 return: "return "
 import: "import "
 else: "else:\n"
@@ -53,6 +57,9 @@ enumerate:
     key(left)
 len:
     "len()"
+    key(left)
+stringy:
+    "str()"
     key(left)
 
 loop: user.snippet_insert("f")

@@ -66,6 +66,7 @@ file move:
     user.vscode("fileutils.moveFile")
     sleep(150ms)
 folder add: user.vscode("workbench.action.addRootFolder")
+folder remove: user.vscode("workbench.action.removeRootFolder")
 folder reveal: user.vscode("revealFileInOS")
 folder create: user.vscode("explorer.newFolder")
 file reveal: user.vscode("workbench.files.action.showActiveFileInExplorer")
@@ -73,7 +74,7 @@ file save ugly: user.vscode("workbench.action.files.saveWithoutFormatting")
 file format: user.vscode("editor.action.formatDocument")
 
 # Language Features
-suggest show: user.vscode("editor.action.triggerSuggest")
+suggest: user.vscode("editor.action.triggerSuggest")
 hint show: user.vscode("editor.action.triggerParameterHints")
 definition show: user.vscode("editor.action.revealDefinition")
 definition peek: user.vscode("editor.action.peekDefinition")
@@ -91,7 +92,7 @@ whitespace trim: user.vscode("editor.action.trimTrailingWhitespace")
 language switch: user.vscode("workbench.action.editor.changeLanguageMode")
 
 #code navigation
-(go declaration | follow): user.vscode("editor.action.revealDefinition")
+go declaration: user.vscode("editor.action.revealDefinition")
 go back: user.vscode("workbench.action.navigateBack")
 go forward: user.vscode("workbench.action.navigateForward")
 go implementation: user.vscode("editor.action.goToImplementation")
@@ -284,17 +285,17 @@ lomment <number>:
     user.select_range(number, number)
     sleep(50ms)
     code.toggle_comment()
-lipe <number>:
+lis <number>:
     user.jump_line(number)
     sleep(50ms)
     user.vscode("editor.action.deleteLines")
-lipe:
+lis:
     user.vscode("editor.action.deleteLines")
 lopy <number>:
     user.select_range(number, number)
     sleep(50ms)
     key(ctrl-c)
-line cut <number>:
+larve <number>:
     user.select_range(number, number)
     sleep(50ms)
     key(ctrl-x)
@@ -308,7 +309,7 @@ line outdent: user.vscode("editor.action.outdentLines")
 line outdent <number>:
     user.jump_line(number)
     user.vscode("editor.action.outdentLines")
-lunder: user.vscode("editor.action.moveLinesDownAction")
+lip: user.vscode("editor.action.moveLinesDownAction")
 lup: user.vscode("editor.action.moveLinesUpAction")
 comment$: user.vscode("editor.action.commentLine")
 line comment <user.text> [over]:
@@ -403,8 +404,8 @@ select last clip: user.select_previous_occurrence(clip.text())
 select next clip: user.select_next_occurrence(clip.text())
 
 # tabs
-teft: user.vscode("workbench.action.previousEditor")
-tight: user.vscode("workbench.action.nextEditor")
+tabut: user.vscode("workbench.action.previousEditor")
+tabit: user.vscode("workbench.action.nextEditor")
 tose: user.vscode("workbench.action.closeActiveEditor")
 tose all: user.vscode("workbench.action.closeAllEditors")
 tab (reopen|restore): user.vscode("workbench.action.reopenClosedEditor")

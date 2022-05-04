@@ -17,21 +17,21 @@ num <user.number_string>: "{number_string}"
 <user.single_digit> hi: core.repeat_command(single_digit)
 hi: core.repeat_command(1)
 
-bottom:key("ctrl-end")
-shottom:key("shift-ctrl-end")
-tip:key("ctrl-home")
-ship:key("shift-ctrl-home")
-kace: key("ctrl-del")
-kipe: key("ctrl-backspace")
-sheft: key("shift-left")
-shite: key("shift-right")
-shkeft: key("ctrl-shift-left")
-shkite: key("ctrl-shift-right")
-keft: key("ctrl-left")
-kite: key("ctrl-right")
-shart: key("shift-home")
-shend: key("shift-end")
-shunder: key("shift-down")
+kip:key("ctrl-end")
+shkip:key("shift-ctrl-end")
+cup:key("ctrl-home")
+shcup:key("shift-ctrl-home")
+kiss: key("ctrl-del")
+cuss: key("ctrl-backspace")
+shut: key("shift-left")
+shit: key("shift-right")
+shcut: key("ctrl-shift-left")
+shkit: key("ctrl-shift-right")
+cut: key("ctrl-left")
+kit: key("ctrl-right")
+shtut: key("shift-home")
+shtit: key("shift-end")
+ship: key("shift-down")
 shup: key("shift-up")
 
 # shortened punctuation
@@ -42,6 +42,7 @@ sang: "! "
 solon: ": "
 sequals: "= "
 sym new line: "\\n"
+sym tab: "\\t"
 sym carriage return: "\\r"
 sym line feed: "\\r\\n"
 
@@ -51,8 +52,8 @@ zoom out: key(ctrl--)
 zoom reset: key(ctrl-0)
 copy: key(ctrl-c)
 copy all: key(ctrl-a ctrl-c)
-cut: key(ctrl-x)
-cut all: key(ctrl-a ctrl-x)
+carve: key(ctrl-x)
+carve all: key(ctrl-a ctrl-x)
 paste: key(ctrl-v)
 ipe all: key(ctrl-a delete)
 undo: key(ctrl-z)
@@ -64,9 +65,9 @@ find <user.text>$:
     key(ctrl-f)
     sleep(.15)
     insert(text)
-lipe: key(home shift-down delete)
+lis: key(home shift-down delete)
 lopy: key(home shift-down ctrl-c)
-line cut: key(home shift-down ctrl-x)
+line carve: key(home shift-down ctrl-x)
 
 #  window management
 window close: key('alt-f4')
@@ -84,8 +85,11 @@ snap <user.running_applications> [screen] <number>:
 # see https://forum.vivaldi.net/topic/30413/password-for-keyring-solved/20
 launch web: user.system_launch("vivaldi-stable --password-store=basic")
 fogy web: user.focus_window("vivaldi-stable")
+launch files: user.system_launch("nautilus")
+fogy files: user.focus_window("org.gnome.Nautilus")
 launch term: user.system_launch("alacritty --class tmux -e tmux")
 fogy term: user.focus_window("tmux")
+switch term: user.switch_app("tmux","alacritty --class tmux -e tmux")
 launch code: user.system_launch("code-insiders /home/adabru/.cache/vscode-default/default.code-workspace")
 fogy code: user.focus_window("code - insiders")
 launch steps: user.system_launch('sh -c "featherpad -w /home/adabru/👣/*"')
@@ -235,3 +239,5 @@ chat ok: "ok\n"
 
 start eye record: user.start_eye_record()
 stop eye record: user.end_eye_record()
+start eye stream: user.start_eye_stream()
+stop eye stream: user.end_eye_stream()
