@@ -2,6 +2,7 @@ app: alacritty
 not title: Todo
 -
 point slash: "./\t\t"
+slash: "/"
 list: "ls\n"
 list verbose: "ls -ahl\n"
 move: "mv "
@@ -14,13 +15,14 @@ remove recurse: "rm -r "
 paste: key(ctrl-shift-v)
 cancel: key(ctrl-c)
 clear: key(ctrl-l)
+replay: key(ctrl-c up enter)
 search$: key(ctrl-r)
 search <phrase>:
   key(ctrl-r)
   "{phrase}"
 quit: key(q)
 less: "less "
-pipe less: " | less\n"
+to less: " | less\n"
 pipe grep$: " | grep "
 pipe grep <phrase>: " | grep {phrase}\n"
 change: "cd "
@@ -28,10 +30,11 @@ change home: "cd ~\n"
 change downloads: "cd ~/downloads\n"
 change setup: "cd ~/setup\n"
 change speech: "cd ~/repo/speech\n"
-change eyeput: "cd ~/repo/eyeput\n"
+change I put: "cd ~/repo/eyeput\n"
 change temp: "cd /tmp\n"
 change talon: "cd ~/.talon/user\n"
 change mount: "cd /mnt\n"
+change gists: "cd ~/repo/gists\n"
 change up: "cd ..\n"
 pe grep: "pgrep "
 top: "top\n"
@@ -64,6 +67,9 @@ restart keys$: "sudo systemctl restart eyeput.keys.service\n"
 
 
 git status: "git status\n"
+git show: "git show "
+# unstage
+git reset: "git reset\n"
 git diff: "git diff --ws-error-highlight=all\n"
 git all: "git add -A\n"
 git commit:
@@ -74,16 +80,22 @@ git set origin: "git remote set-url origin "
 git add origin: "git remote add origin "
 git push: "git push\n"
 git clone: "git clone "
+git log: "glog\n"
 
 pacman search: "pacman -Ss "
-pacman install: "pacman -S "
+pacman local search: "pacman -Qs "
+pacman add: "pacman -S "
+pacman remove: "pacman -Rs "
+pacman info: "pacman -Qi "
+trizen search: "trizen -Ss "
+trizen add: "trizen -S "
 update: "update\n"
 
 pip list: "pip list\n"
-pip install$: "pip install "
-pip install <phrase>: "pip install {phrase}\n"
-pip uninstall$: "pip uninstall "
-pip uninstall <phrase>: "pip uninstall {phrase}\n"
+pip add$: "pip install "
+pip add <phrase>: "pip install {phrase}\n"
+pip remove$: "pip uninstall "
+pip remove <phrase>: "pip uninstall {phrase}\n"
 pip update$: "pip install -U "
 pip update <phrase>: "pip install -U {phrase}\n"
 
@@ -92,12 +104,13 @@ in wheel: "imwheel -b 45\n"
 # tmux
 tew: key(alt-v)
 tose: key(alt-y)
-teft: key(alt-s)
-tight: key(alt-f)
+tabut: key(alt-s)
+tabit: key(alt-f)
 
 wifi list: "nmcli device wifi\n"
 wifi connect: "nmcli device wifi connect -a "
 wifi connection: "nmcli connection show\n"
+ip route: "ip route\n"
 
 unmount: "sudo umount /mnt\n"
 mount squash: "sudo mount -o loop /mnt"

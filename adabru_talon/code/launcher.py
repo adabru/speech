@@ -20,14 +20,14 @@ class Actions:
     def print_debug():
         """..."""
         for window in ewmh.getClientList():
-            wm_class = window.get_wm_class()
+            wm_class = window.get_wm_class() or ("", "")
             wm_name = window.get_wm_name()
             print(f"instance:'{wm_class[0]}', class:'{wm_class[1]}', name:'{wm_name}'")
 
     def focus_window(label: str):
         """..."""
         for window in ewmh.getClientList():
-            wm_class = window.get_wm_class()
+            wm_class = window.get_wm_class() or ("", "")
             wm_name = window.get_wm_name()
             if label == wm_name or label == wm_class[0] or label == wm_class[1]:
                 ewmh.setActiveWindow(window)

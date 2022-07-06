@@ -23,7 +23,7 @@ def still_running():
     if running:
         threshold_passed = True
         toggle_mouse_drag(True)
-        print("hiss duration passed threshold, starting gaze drag")
+        # print("hiss duration passed threshold, starting gaze drag")
 
 
 def cursor_drag_on_hiss(is_active):
@@ -40,7 +40,7 @@ def cursor_drag_on_hiss(is_active):
         if threshold_passed:
             threshold_passed = False
             toggle_mouse_drag(False)
-            print("end of hiss detected, disabling gaze drag")
+            # print("end of hiss detected, disabling gaze drag")
 
 
 noise.register("hiss", cursor_drag_on_hiss)

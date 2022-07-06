@@ -70,8 +70,9 @@ folder remove: user.vscode("workbench.action.removeRootFolder")
 folder reveal: user.vscode("revealFileInOS")
 folder create: user.vscode("explorer.newFolder")
 file reveal: user.vscode("workbench.files.action.showActiveFileInExplorer")
-file save ugly: user.vscode("workbench.action.files.saveWithoutFormatting")
 file format: user.vscode("editor.action.formatDocument")
+ok ugly: user.vscode("workbench.action.files.saveWithoutFormatting")
+ok all: user.vscode("workbench.action.files.saveFiles")
 
 # Language Features
 suggest: user.vscode("editor.action.triggerSuggest")
@@ -105,7 +106,7 @@ go recent [<user.text>]:
     sleep(250ms)
 
 # Bookmarks. Requires Bookmarks plugin
-mark <user.text>:
+mark <user.text>$:
     user.vscode("bookmarks.toggleLabeled")
     sleep(20ms)
     insert(text)
@@ -113,7 +114,7 @@ mark <user.text>:
     key(enter)
 un mark: user.vscode("bookmarks.toggle")
 lookup$: user.vscode("bookmarks.listFromAllFiles")
-lookup <user.text>:
+lookup <user.text>$:
     user.vscode("bookmarks.listFromAllFiles")
     sleep(200ms)
     insert(text)
@@ -173,7 +174,7 @@ debug run: user.vscode("workbench.action.debug.run")
 debug pause: user.vscode("workbench.action.debug.pause")
 debug stopper: user.vscode("workbench.action.debug.stop")
 debug continue: user.vscode("workbench.action.debug.continue")
-debug restart: user.vscode("workbench.action.debug.restart")
+debug replay: user.vscode("workbench.action.debug.restart")
 debug console: user.vscode("workbench.debug.action.toggleRepl")
 
 # Terminal
@@ -209,7 +210,7 @@ full screen: user.vscode("workbench.action.toggleFullScreen")
 
 curse undo: user.vscode("cursorUndo")
 
-sword: user.vscode("editor.action.addSelectionToNextFindMatch")
+next: user.vscode("editor.action.addSelectionToNextFindMatch")
 skip word: user.vscode("editor.action.moveSelectionToNextFindMatch")
 
 # jupyter

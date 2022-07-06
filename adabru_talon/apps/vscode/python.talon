@@ -20,10 +20,13 @@ com: ","
 col: ":"
 dash: "-"
 minus: "-"
+hash: "#"
 downscore: "_"
 plus: "+"
 star: "*"
 slash: "/"
+modulo: "%"
+percent: "%"
 box: "["
 right box: "]"
 round: "("
@@ -34,7 +37,7 @@ greater: ">"
 less: "<"
 dote: "\""
 quote: "'"
-assign: "="
+sign: "="
 equals: "=="
 not equals: "!="
 not: "not "
@@ -46,11 +49,19 @@ false: "False"
 true: "True"
 self: "self"
 int: "int"
+float: "float"
 return: "return "
 import: "import "
+assert: "assert "
+global: "global "
 else: "else:\n"
+try: "try:\n"
+except: "except Exception as e:\n"
 print:
     "print()"
+    key(left)
+range:
+    "range()"
     key(left)
 enumerate:
     "enumerate()"
@@ -65,6 +76,10 @@ stringy:
 loop: user.snippet_insert("f")
 while: user.snippet_insert("w")
 if: user.snippet_insert("if")
+elif: user.snippet_insert("elif")
 function: user.snippet_insert("func")
 class: user.snippet_insert("c")
 constructor: user.snippet_insert("init")
+store: user.snippet_insert("store")
+
+file play: user.vscode("python.execInTerminal")

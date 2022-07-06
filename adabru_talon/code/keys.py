@@ -3,7 +3,7 @@ from typing import Set
 from talon import Module, Context, actions, app
 import sys
 
-default_alphabet = "air beach cap dream egg flop gust hunch sit john ka look made near odd pit cu red sun trap urge vest when plex yank zip".split(
+default_alphabet = "air beach cap dream each flop gust hunch sit john ka look made near odd pit cu red sun trap urge vest when plex yank zip".split(
     " "
 )
 letters_string = "abcdefghijklmnopqrstuvwxyz"
@@ -193,7 +193,7 @@ ctx.lists["self.special_key"] = {
     "spy": "space",
     "us": "backspace",
     "is": "delete",
-    "out": "escape",
+    "no": "escape",
     "go": "enter",
     "ta": "tab",
     # 'junk': 'backspace',

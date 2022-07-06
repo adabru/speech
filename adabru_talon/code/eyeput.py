@@ -1,7 +1,12 @@
 import os.path
 
+# see ~/downloads/talon-linux/talon/resources/python/lib/python3.9/site-packages/talon/plugins/eye_mouse_2.pyi
+# see ~/downloads/talon-linux/talon/resources/python/lib/python3.9/site-packages/talon/track/tobii.pyi
+# see https://developer.tobii.com/product-integration/stream-engine
+# see https://tobiitech.github.io/stream-engine-docs
+
 from talon import tracking_system, Module
-from talon.plugins.eye_mouse_2 import BaseMouse
+from talon.plugins.eye_mouse_2 import BaseControlMouse
 
 from .unix_socket import UnixSocket
 
@@ -16,7 +21,7 @@ from .unix_socket import UnixSocket
 #     break
 
 
-class RecordingMouse(BaseMouse):
+class RecordingMouse(BaseControlMouse):
     trace = []
     trace_path = os.path.expanduser("~/s")
 
@@ -31,11 +36,25 @@ class RecordingMouse(BaseMouse):
         self.trace = []
 
 
-class StreamingMouse(BaseMouse):
+i = 0
+
+
+class StreamingMouse(BaseControlMouse):
     sock_gaze = UnixSocket("/tmp/gaze_input.sock", 100)
 
     def on_gaze(self, frame):
-        self.sock_gaze.try_send(f"{frame.ts} {frame.gaze.x} {frame.gaze.y}")
+        global i
+        if i == 0:
+            # print(frame.left)
+            print(frame.left.validity, frame.left.detected, frame.left.gaze.x)
+        i += 1
+        try:
+            self.sock_gaze.try_send(
+                f"{frame.ts} {frame.left.gaze.x} {frame.left.gaze.y} {frame.right.gaze.x} {frame.right.gaze.y}"
+            )
+        except BlockingIOError as e:
+            # print("eyeput unavailable")
+            pass
 
 
 recording_mouse = RecordingMouse()
