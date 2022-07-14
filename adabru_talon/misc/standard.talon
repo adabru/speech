@@ -235,3 +235,5 @@ start eye record: user.start_eye_record()
 stop eye record: user.end_eye_record()
 start eye stream: user.start_eye_stream()
 stop eye stream: user.end_eye_stream()
+
+playground python: user.system_exec("code-insiders ~/s.py")

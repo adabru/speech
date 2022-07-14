@@ -1,14 +1,6 @@
 # see https://github.com/knausj85/knausj_talon/blob/master/mouse_grid/mouse_grid.py
 import time
-from talon import (
-    Module,
-    Context,
-    actions,
-    noise,
-    cron,
-    registry,
-)
-from talon_plugins.eye_mouse import config, toggle_control
+from talon import Module, Context, actions, noise, cron, registry
 
 mod = Module()
 mod.tag("wheel_pop", desc="Enable pop scrolling")
@@ -26,15 +18,15 @@ class Actions:
         global scroll_amount, was_controlling
         ctx.tags = ["user.wheel_pop"]
         scroll_amount = abs(scroll_amount)
-        was_controlling = config.control_mouse
-        toggle_control(False)
+        was_controlling = actions.tracking.control_enabled()
+        actions.tracking.control_toggle(False)
 
     def disable_wheel_pop():
         """???"""
         global was_controlling
         ctx.tags = []
         stop_scroll()
-        toggle_control(was_controlling)
+        actions.tracking.control_toggle(was_controlling)
 
 
 def on_pop(active):

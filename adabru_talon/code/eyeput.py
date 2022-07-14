@@ -40,7 +40,7 @@ i = 0
 
 
 class StreamingMouse(BaseControlMouse):
-    sock_gaze = UnixSocket("/tmp/gaze_input.sock", 100)
+    sock_gaze = UnixSocket("/tmp/gaze_input.sock", 150)
 
     def on_gaze(self, frame):
         global i
