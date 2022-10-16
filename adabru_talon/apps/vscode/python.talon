@@ -54,7 +54,7 @@ return: "return "
 import: "import "
 assert: "assert "
 global: "global "
-else: "else:\n"
+otherwise: "else:\n"
 try: "try:\n"
 except: "except Exception as e:\n"
 print:

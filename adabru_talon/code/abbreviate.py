@@ -64,6 +64,7 @@ abbreviations = {
     "device": "dev",
     "dictation": "dict",
     "dictionary": "dict",
+    "difference": "diff",
     "direction": "dir",
     "directory": "dir",
     "distribution": "dist",

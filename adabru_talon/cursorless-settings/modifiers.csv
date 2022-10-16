@@ -5,3 +5,16 @@ inside, interiorOnly
 just, toRawSelection
 slice, verticalRange
 tail, extendThroughEndOf
+
+
+# 2022-10-08 21:47:36 - New entries automatically added by cursorless
+backward, backward
+content, keepContentFilter
+empty, keepEmptyFilter
+every, every
+first, first
+last, last
+leading, leading
+next, next
+previous, previous
+trailing, trailing

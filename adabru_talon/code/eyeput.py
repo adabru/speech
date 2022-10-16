@@ -1,4 +1,6 @@
 import os.path
+import pickle
+
 
 # see ~/downloads/talon-linux/talon/resources/python/lib/python3.9/site-packages/talon/plugins/eye_mouse_2.pyi
 # see ~/downloads/talon-linux/talon/resources/python/lib/python3.9/site-packages/talon/track/tobii.pyi
@@ -40,17 +42,26 @@ i = 0
 
 
 class StreamingMouse(BaseControlMouse):
-    sock_gaze = UnixSocket("/tmp/gaze_input.sock", 150)
+    sock_gaze = UnixSocket("/tmp/gaze_input.sock", 200)
 
-    def on_gaze(self, frame):
+    def update(self, tracker, screen, frame) -> None:
         global i
         if i == 0:
-            # print(frame.left)
-            print(frame.left.validity, frame.left.detected, frame.left.gaze.x)
+            print(
+                frame.gaze_frame.left.pos,
+            )
         i += 1
         try:
             self.sock_gaze.try_send(
-                f"{frame.ts} {frame.left.gaze.x} {frame.left.gaze.y} {frame.right.gaze.x} {frame.right.gaze.y}"
+                pickle.dumps(
+                    (
+                        frame.gaze_frame.ts,
+                        list(frame.gaze_frame.left.pos),
+                        list(frame.gaze_frame.left.gaze3d),
+                        list(frame.gaze_frame.right.pos),
+                        list(frame.gaze_frame.right.gaze3d),
+                    )
+                )
             )
         except BlockingIOError as e:
             # print("eyeput unavailable")

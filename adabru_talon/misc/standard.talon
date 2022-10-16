@@ -17,6 +17,7 @@ num <user.number_string>: "{number_string}"
 <user.single_digit> hi: core.repeat_command(single_digit)
 hi: core.repeat_command(1)
 
+unta:key("shift-tab")
 kip:key("ctrl-end")
 shkip:key("shift-ctrl-end")
 cup:key("ctrl-home")

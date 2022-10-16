@@ -25,6 +25,9 @@ less: "less "
 to less: " | less\n"
 pipe grep$: " | grep "
 pipe grep <phrase>: " | grep {phrase}\n"
+pe kill <phrase>: "pkill {phrase}"
+pe kill: "pkill "
+kill: "kill "
 change: "cd "
 change home: "cd ~\n"
 change downloads: "cd ~/downloads\n"
@@ -37,6 +40,7 @@ change mount: "cd /mnt\n"
 change gists: "cd ~/repo/gists\n"
 change up: "cd ..\n"
 pe grep: "pgrep "
+pe grep <phrase>: "pgrep -a {phrase}\n"
 top: "top\n"
 cat: "cat "
 allow exec: "chmod +x "
@@ -68,6 +72,8 @@ restart keys$: "sudo systemctl restart eyeput.keys.service\n"
 
 git status: "git status\n"
 git show: "git show "
+git stash: "git stash\n"
+git stash pop: "git stash pop\n"
 # unstage
 git reset: "git reset\n"
 git diff: "git diff --ws-error-highlight=all\n"
@@ -76,10 +82,12 @@ git commit:
   "git commit -m \"\""
   key(left)
 git amend: "git commit --amend --no-edit"
+git origin: "git remote get-url origin "
 git set origin: "git remote set-url origin "
 git add origin: "git remote add origin "
 git push: "git push\n"
 git clone: "git clone "
+git shallow clone: "git clone --single-branch --depth 1 "
 git log: "glog\n"
 
 pacman search: "pacman -Ss "
@@ -117,3 +125,6 @@ unmount: "sudo umount /mnt\n"
 mount squash: "sudo mount -o loop /mnt"
 
 sink: "sync.py\n"
+
+download playlist: 'youtube-dl --playlist-start 1 -f 250/251 -o "%(title)s.opus" '
+download playlist alternative: 'youtube-dl --playlist-start 1 -f 140 -o "%(title)s.m4a" '

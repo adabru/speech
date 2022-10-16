@@ -257,7 +257,7 @@ block wipe <number> through <number>:
 block copy <number> through <number>:
     user.select_range(number_1, number_2)
     key(ctrl-c)
-block cut <number> through <number>:
+block carve <number> through <number>:
     user.select_range(number_1, number_2)
     key(ctrl-x)
 block replace <number> through <number>:

@@ -23,7 +23,7 @@ while True:
     logger.info("Connected. Listening for commands ...")
     try:
         while True:
-            command = sock_launcher.receive()
+            command = sock_launcher.receive_string()
             # very basic security
             command = command[1:]
             logger.info(command)

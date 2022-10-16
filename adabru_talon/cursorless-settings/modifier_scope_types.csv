@@ -41,3 +41,15 @@ token, token
 type, type
 value, value
 word, word
+
+
+# 2022-10-08 21:47:41 - New entries automatically added by cursorless
+callee, functionCallee
+chapter, chapter
+environment, environment
+paragraph, namedParagraph
+part, part
+short paint, boundedNonWhitespaceSequence
+subparagraph, subParagraph
+subsection, subSection
+subsubsection, subSubSection
