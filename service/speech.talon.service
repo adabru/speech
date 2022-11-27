@@ -1,7 +1,5 @@
 [Unit]
 Description=talonvoice
-CPUWeight=8000
-Nice=-20
 
 [Service]
 Type=simple
@@ -9,7 +7,8 @@ Type=simple
 ExecStart=/home/adabru/downloads/talon-linux-109-0.2.0-357-g3b3e/talon/run.sh
 Restart=on-failure
 RestartSec=30s
+CPUWeight=8000
+Nice=-20
 
 [Install]
 WantedBy=default.target
-

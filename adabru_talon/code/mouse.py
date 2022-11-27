@@ -20,7 +20,6 @@ def still_running():
 
 
 def cursor_drag_on_hiss(is_active):
-    print("enol")
     global start
     global running
     global threshold_passed

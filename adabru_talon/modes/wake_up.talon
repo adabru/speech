@@ -4,7 +4,7 @@ not tag: user.deep_sleep
 -
 ^sleep [<phrase>]$:
     speech.disable()
-    user.toggle_mouse(0)
+    user.set_tag("follow", false)
 ^wake$:
     speech.enable()
-    user.toggle_mouse()
+    user.toggle_tag("follow")

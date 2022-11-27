@@ -91,6 +91,7 @@ switch steps: user.switch_app('featherpad', 'sh -c "featherpad -w /home/adabru/ð
 to dos: user.switch_app('todo', 'sh -c "alacritty -t Todo --class todo -e vim ~/s"')
 launch mail: user.system_launch('thunderbird')
 fogy mail: user.focus_window('Thunderbird')
+switch volume: user.switch_app('pavucontrol', 'pavucontrol')
 fogy office: user.focus_window('libreoffice')
 launch$: user.system_start("albert toggle")
 fogy debug: user.print_debug()

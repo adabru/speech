@@ -41,7 +41,7 @@ sign: "="
 equals: "=="
 not equals: "!="
 not: "not "
-or: " or "
+other: " or "
 also: " and "
 
 none: "None"
