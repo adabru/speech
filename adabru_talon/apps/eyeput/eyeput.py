@@ -9,12 +9,12 @@ import threading
 # see https://developer.tobii.com/product-integration/stream-engine
 # see https://tobiitech.github.io/stream-engine-docs
 
-from talon import Module, actions, registry
+from talon import Module, actions, registry, ctrl
 from talon.plugins.eye_mouse_2 import BaseControlMouse
 
 from ...code.unix_socket import UnixSocket
 from .resource import register
-from .session_bus import SessionBus
+from .session_bus import BusProxy, SessionBus
 from .shared_tags import Event, TagSharing, Tags
 
 # print(tracking_system.trackers)
@@ -78,75 +78,78 @@ recording_mouse = RecordingMouse()
 streaming_mouse = StreamingMouse()
 
 
-tags = Tags()
-
-# couple bus thread and talon thread via talon.registry.dispatch_async
-bus_thread_id = None
-
-
-def tag_changed(tag, value):
-    # relay to talon thread
-    if threading.get_native_id() == bus_thread_id:
-        registry.dispatch_async("eyeput", tag, value)
-        return
-
-    if tag == "follow":
-        actions.user.toggle_mouse(value)
-    elif tag == "connect":
-        streaming_mouse.start()
-
-
-tags.tag_changed.subscribe(tag_changed)
-
-registry.register("eyeput", tag_changed)
-
-
-class BusConnection:
-    def __init__(self):
-        # there's no running event loop
+class BusThread(threading.Thread):
+    def __init__(self, bus):
+        super().__init__()
+        self.bus = bus
         self.run_event_loop = True
-        th = threading.Thread(target=self.run)
-        th.start()
-        global bus_thread_id
-        bus_thread_id = th.native_id
 
-    def run(self):
-        asyncio.run(self.run2())
-
-    async def run2(self):
-        # start bus
-        self.bus = SessionBus("/tmp/adabru", client_only=True)
-        self.bus.subscribe(self.bus_event)
-
-        # synchronize between talon and bus
-        self.tag_sharing = TagSharing(
-            tags,
-            self.bus,
-            "talon.tags",
-            "eyeput.tags",
-            asyncio.get_running_loop(),
-        )
+    async def event_loop(self):
+        # async init
+        self.bus.async_init()
 
         # keep event loop running
         while self.run_event_loop:
             await asyncio.sleep(1)
-        print("Stop event loop.")
+        print("Stop bus thread.")
 
-    def bus_event(self, event):
-        print("bus event:", event)
-        if event == "connect":
-            # streaming_mouse.start() or cron.after can't be called from a async function:
-            # > IO No active resource context in this thread/coroutine.
-            registry.dispatch_async("eyeput", "connect", True)
-
-    def cleanup(self):
-        self.run_event_loop = False
-        streaming_mouse.sock_gaze.sock.close()
+    def run(self):
+        asyncio.run(self.event_loop())
 
 
-connection = BusConnection()
+bus = SessionBus("/tmp/adabru", client_only=True)
+bus_thread = BusThread(bus)
+bus_thread.start()
 
-register("eyeput", connection.cleanup)
+# couple bus thread and talon thread via talon.registry.dispatch_async
+def relay_to_talon_thread(*args):
+    if threading.get_native_id() == bus_thread.native_id:
+        registry.dispatch_async("eyeput", *args)
+        return True
+    else:
+        return False
+
+
+def eyeput_callback(callback, *args):
+    callback(*args)
+
+
+registry.register("eyeput", eyeput_callback)
+
+tags = Tags()
+
+
+def tag_changed(tag, value):
+    if relay_to_talon_thread(tag_changed, tag, value):
+        return
+    if tag == "follow":
+        actions.user.toggle_mouse(value)
+
+
+tags.tag_changed.subscribe(tag_changed)
+tag_sharing = TagSharing(tags, bus, "talon.tags", "eyeput.tags")
+
+
+def bus_event(event):
+    # streaming_mouse.start() or cron.after can't be called from a async function:
+    # > IO No active resource context in this thread/coroutine.
+    if relay_to_talon_thread(bus_event, event):
+        return
+    if event == "connect":
+        streaming_mouse.start()
+
+
+bus.subscribe(bus_event)
+
+bus_executor = BusProxy(bus, "executor")
+
+
+def cleanup():
+    bus_thread.run_event_loop = False
+    streaming_mouse.sock_gaze.sock.close()
+
+
+register("eyeput", cleanup)
 
 
 # destructor and module unload is quite unreliable
@@ -192,3 +195,10 @@ class Actions:
     def toggle_tag(tag: str):
         """..."""
         tags.toggle_tag(tag)
+
+    def bus_execute(id: str, data: object = None):
+        """..."""
+        if id == "left_click":
+            ctrl.mouse_click(button=0, hold=16000)
+
+        bus.schedule(bus_executor.call("execute", id, data))

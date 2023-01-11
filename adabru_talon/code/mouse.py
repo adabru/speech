@@ -48,7 +48,7 @@ noise.register("hiss", cursor_drag_on_hiss)
 def on_pop(active):
     if "user.wheel_pop" in registry.tags:
         return
-    ctrl.mouse_click(button=0, hold=16000)
+    actions.user.bus_execute("left_click")
 
 
 noise.register("pop", on_pop)
