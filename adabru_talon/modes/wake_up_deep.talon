@@ -4,8 +4,9 @@ mode: all
 ^deep sleep [<phrase>]$:
     user.enable_deep_sleep()
     speech.disable()
-    user.mouse_sleep()
+    # user.engine_sleep()
+    user.set_tag("follow", false)
 ^wakeup wakeup$:
     user.disable_deep_sleep()
     speech.enable()
-    user.mouse_toggle_control_mouse()
+    user.toggle_tag("follow")

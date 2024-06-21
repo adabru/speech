@@ -70,8 +70,7 @@ stop keys$: "sudo systemctl stop eyeput.keys.service\n"
 restart keys$: "sudo systemctl restart eyeput.keys.service\n"
 
 
-git status: "git status\n"
-git show: "git show "
+1it show: "git show "
 git stash: "git stash\n"
 git stash pop: "git stash pop\n"
 # unstage

@@ -1,5 +1,8 @@
 # https://github.com/elichad/elichad_talon/blob/main/mouse_drag_on_hiss.py
 from talon import Module, actions, ctrl, noise, cron, registry
+
+# from talon.plugins.eye_mouse_2 import calib_start
+
 from time import sleep, time
 
 start = 0
@@ -60,3 +63,7 @@ class Actions:
         """???"""
         print(state)
         actions.tracking.control_toggle(state)
+
+    def mouse_calibrate():
+        """Start calibration"""
+        actions.tracking.calibrate()

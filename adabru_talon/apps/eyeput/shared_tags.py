@@ -38,6 +38,9 @@ class Tags:
         self.tags = set()
         self.tag_changed = Event()
 
+    def __iter__(self):
+        return iter(self.tags)
+
     def has(self, tag: str):
         return tag in self.tags
 
@@ -80,6 +83,8 @@ class TagSharing:
         self.proxy = None
         self.populate_future = None
         self.bus.subscribe(self.bus_event)
+        # maybe bus is already connected
+        self.bus.schedule(self.populate_bus())
         self.tags.tag_changed.subscribe(self.local_tag_changed)
 
     async def populate_bus(self):

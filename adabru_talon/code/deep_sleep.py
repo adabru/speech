@@ -1,7 +1,4 @@
-from talon import (
-    Module,
-    Context,
-)
+from talon import Module, Context
 
 mod = Module()
 mod.tag("deep_sleep", desc="Enable deep sleep")

@@ -9,7 +9,7 @@ import threading
 # see https://developer.tobii.com/product-integration/stream-engine
 # see https://tobiitech.github.io/stream-engine-docs
 
-from talon import Module, actions, registry, ctrl
+from talon import Module, actions, registry, ctrl, speech_system
 from talon.plugins.eye_mouse_2 import BaseControlMouse
 
 from ...code.unix_socket import UnixSocket
@@ -124,10 +124,25 @@ def tag_changed(tag, value):
         return
     if tag == "follow":
         actions.user.toggle_mouse(value)
+    elif tag == "disable_speech":
+        if value:
+            speech_system.engine.disable()
+        else:
+            speech_system.engine.enable()
+    elif tag == "german":
+        if value:
+            actions.user.german_dictation()
+        else:
+            actions.user.deactivate_german()
+    elif tag == "german_words":
+        if value:
+            actions.user.german_words()
+        else:
+            actions.user.deactivate_german()
 
 
 tags.tag_changed.subscribe(tag_changed)
-tag_sharing = TagSharing(tags, bus, "talon.tags", "eyeput.tags")
+# tag_sharing = TagSharing(tags, bus, "talon.tags", "eyeput.tags")
 
 
 def bus_event(event):
